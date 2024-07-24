@@ -1,0 +1,9 @@
+- name: restart sshd
+  become: true
+  service:
+    name: ssh
+    state: restarted
+
+- name: update resolvconf
+  become: true
+  command: resolvconf -u

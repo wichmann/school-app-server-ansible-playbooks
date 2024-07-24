@@ -1,0 +1,36 @@
+- name: Replace mail address in template
+  ansible.builtin.replace:
+    path: "{{ docker.base_dir }}/infrastructure/traefik.yml"
+    regexp: '(\s+)mail@example.com(\s+.*)?$'
+    replace: '\1wichmann@bbs-brinkstrasse.de\2'
+
+- name: Copy Traefik configuration file
+  ansible.builtin.copy:
+    src: files/traefik.env
+    dest: "{{ docker.base_dir }}/infrastructure/.env"
+
+- name: Copy Traefik configuration file
+  ansible.builtin.copy:
+    src: files/watchtower_telegram_url.txt
+    dest: "{{ docker.base_dir }}/infrastructure/watchtower_telegram_url.txt"
+    
+- name: Copy Traefik configuration file
+  ansible.builtin.copy:
+    src: files/traefik_dashboard_auth.txt
+    dest: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth.txt"
+
+- name: Create HTTP basic auth credentials for Traefik dashboard
+  community.general.htpasswd:
+    path: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth2.txt"
+    name: admin
+    password: 123456
+    #owner: root
+    #group: www-data
+    #mode: 0640
+
+- name: Start Docker container for infrastructure
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/infrastructure"
+    # env_files: "{{ docker.base_dir }}/infrastructure/.env"
+    state: present
+  register: output

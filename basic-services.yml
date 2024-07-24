@@ -1,0 +1,5 @@
+- name: Install and configure basic services
+  hosts: schoolservers
+  become: true
+  roles:
+    - services

@@ -1,0 +1,13 @@
+- name: Git checkout
+  become: true
+  ansible.builtin.git:
+    repo: "{{ school_server_app_git_repo }}"
+    dest: "{{ docker.base_dir }}"
+    # discard any modified files in the working repository
+    force: true
+
+- name: Change file permission on acme.json
+  become: true
+  ansible.builtin.file:
+    path: "{{ docker.base_dir }}/infrastructure/acme.json"
+    mode: 0600

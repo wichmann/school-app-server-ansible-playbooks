@@ -1,0 +1,25 @@
+- name: Install apt packages
+  become: true
+  apt:
+    update_cache: yes
+    name: "{{ basic_packages }}"
+    state: present
+
+- name: Upgrade all apt packages
+  become: true
+  apt:
+    force_apt_get: yes
+    upgrade: dist
+
+- name: All packages installed.
+  debug:
+    msg: Packages have been successfully installed
+
+# install docker-vackup
+#curl -sSL https://raw.githubusercontent.com/BretFisher/docker-vackup/main/vackup -o /usr/local/bin/vackup && sudo chmod +x /usr/local/bin/vackup
+
+- name: Copy script to update manually
+  become: true
+  ansible.builtin.copy:
+    src: files/update.sh
+    dest: /root/update.sh

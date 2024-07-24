@@ -1,0 +1,14 @@
+- name: Initial Server Setup
+  hosts: schoolservers
+  become: true
+  roles:
+    - role: system
+    - role: hifis.unattended-upgrades
+      unattended_origins_patterns:
+        - "origin=Ubuntu,archive=${distro_codename}-security"
+        - "o=Ubuntu,a=${distro_codename}"
+        - "o=Ubuntu,a=${distro_codename}-updates"
+        - "o=Ubuntu,a=${distro_codename}-proposed-updates"
+      unattended_automatic_reboot: true
+      unattended_automatic_reboot_time: (23:42)
+    - role: geerlingguy.docker

@@ -1,0 +1,30 @@
+- name: create users and set permissions
+  import_tasks: user.yml
+
+- name: import ssh tasks
+  import_tasks: ssh.yml
+
+- name: install necessary packages and update all
+  import_tasks: updates.yml
+
+- name: Set a hostname
+  become: true
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Set timezone
+  become: true
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Ensure a locale exists
+  become: true
+  community.general.locale_gen:
+    name: "{{ locale }}"
+    state: present
+
+- name: Create profile.d configuration
+  become: true
+  ansible.builtin.copy:
+    src: files/show_info.sh
+    dest: /etc/profile.d/show_info.sh

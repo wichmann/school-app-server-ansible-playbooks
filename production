@@ -1,0 +1,6 @@
+schoolservers:
+  hosts:
+    server-it-01:
+      ansible_host: brinkstrasse.schule
+  vars:
+    ansible_user: wichmann

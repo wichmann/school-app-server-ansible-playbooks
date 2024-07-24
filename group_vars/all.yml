@@ -1,0 +1,25 @@
+docker:
+  base_dir: "/opt/docker"
+
+docker_dir: "/opt/docker"
+
+all_service_defaults:
+  owner: "{{ admin.name }}"
+
+traefik:
+  name: traefik
+  directory: "{{ docker_dir }}/traefik"
+  domain: "traefik.pinyto.de"
+  http_basic_users: "admin:$$apr1$$C7q4MwxW$$3DbS4TuKkgnkPvS8H3vZG1"
+
+portainer:
+  name: portainer
+  admin_user: "admin"
+  directory: "{{ docker_dir }}/portainer"
+  admin_password: "6sjGtgBr1EkX1EARfkxovKh5p"
+
+watchtower:
+  name: watchtower
+  directory: "{{ docker_dir }}/watchtower"
+  http_token: "6sjGtgBr1EkX1EARfkxovKh5p"
+  telegram_bot_token: ""

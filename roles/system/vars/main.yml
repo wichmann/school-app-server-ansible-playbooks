@@ -1,0 +1,24 @@
+basic_packages:
+  - vim
+  - nano
+  - wget
+  - curl
+  - zsh
+  - htop
+  - bpytop
+  - python3
+  - python3-pip
+  - python3-docker
+  - python3-passlib
+  - rsync
+  - zip
+  - unzip
+  - fail2ban
+  - ufw
+  - figlet
+  - neofetch
+  - fortunes-bofh-excuses
+  - fortunes-de
+  - ncdu
+  - update-notifier-common
+  - unattended-upgrades

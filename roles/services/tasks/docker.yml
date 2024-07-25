@@ -4,33 +4,39 @@
     regexp: '(\s+)mail@example.com(\s+.*)?$'
     replace: '\1wichmann@bbs-brinkstrasse.de\2'
 
-- name: Copy Traefik configuration file
-  ansible.builtin.copy:
-    src: files/traefik.env
-    dest: "{{ docker.base_dir }}/infrastructure/.env"
 
-- name: Copy Traefik configuration file
+- name: Create Traefik configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/infrastructure/.env.j2"
+
+- name: Copy Watchtower configuration file
   ansible.builtin.copy:
     src: files/watchtower_telegram_url.txt
     dest: "{{ docker.base_dir }}/infrastructure/watchtower_telegram_url.txt"
-    
-- name: Copy Traefik configuration file
+
+- name: Copy Portainer password file
   ansible.builtin.copy:
-    src: files/traefik_dashboard_auth.txt
-    dest: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth.txt"
+    src: files/portainer_admin_password.txt
+    dest: "{{ docker.base_dir }}/infrastructure/portainer_admin_password.txt"
+
+#- name: Copy Traefik configuration file
+#  ansible.builtin.copy:
+#    src: files/traefik_dashboard_auth.txt
+#    dest: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth.txt"
 
 - name: Create HTTP basic auth credentials for Traefik dashboard
   community.general.htpasswd:
-    path: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth2.txt"
+    path: "{{ docker.base_dir }}/infrastructure/traefik_dashboard_auth.txt"
     name: admin
-    password: 123456
-    #owner: root
-    #group: www-data
-    #mode: 0640
+    password: EaFtxVRKWKVhwPgnecdj
+    # explicitly use secure hash "bcrypt" instead of "md5"
+    # https://passlib.readthedocs.io/en/stable/lib/passlib.apache.html#passlib.apache.HtpasswdFile
+    hash_scheme: bcrypt
 
 - name: Start Docker container for infrastructure
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/infrastructure"
-    # env_files: "{{ docker.base_dir }}/infrastructure/.env"
     state: present
   register: output

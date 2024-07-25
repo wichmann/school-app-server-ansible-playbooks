@@ -25,6 +25,6 @@
 
 - name: Create profile.d configuration
   become: true
-  ansible.builtin.copy:
-    src: files/show_info.sh
+  ansible.builtin.template:
+    src: show_info.sh.j2
     dest: /etc/profile.d/show_info.sh

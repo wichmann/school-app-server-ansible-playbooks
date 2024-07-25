@@ -1,5 +1,7 @@
 - name: Install and configure basic services
   hosts: schoolservers
   become: true
+  remote_user: wichmann
   roles:
+    - docker
     - services

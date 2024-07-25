@@ -15,9 +15,6 @@
   debug:
     msg: Packages have been successfully installed
 
-# install docker-vackup
-#curl -sSL https://raw.githubusercontent.com/BretFisher/docker-vackup/main/vackup -o /usr/local/bin/vackup && sudo chmod +x /usr/local/bin/vackup
-
 - name: Copy script to update manually
   become: true
   ansible.builtin.copy:

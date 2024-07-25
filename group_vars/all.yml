@@ -6,7 +6,6 @@ services:
   traefik:
     subdomain: dashboard
     metrics_domain: metrics
-    http_basic_users: "admin:$$apr1$$C7q4MwxW$$3DbS4TuKkgnkPvS8H3vZG1"
     dashboard_user: "admin"
     dashboard_password: "6sjGtgBr1EkX1EARfkxovKh5p"
   portainer:

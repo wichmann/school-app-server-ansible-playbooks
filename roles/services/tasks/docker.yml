@@ -8,7 +8,7 @@
   become: true
   ansible.builtin.template:
     src: .env.j2
-    dest: "{{ docker.base_dir }}/infrastructure/.env.j2"
+    dest: "{{ docker.base_dir }}/infrastructure/.env"
 
 - name: Copy Watchtower configuration file
   ansible.builtin.copy:

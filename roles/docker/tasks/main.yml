@@ -1,0 +1,13 @@
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: geerlingguy.docker
+
+- name: Add admin user to group docker
+  become: true
+  ansible.builtin.user:
+    name: "{{ admin.name }}"
+    groups: docker
+    append: yes
+
+# install docker-vackup
+#curl -sSL https://raw.githubusercontent.com/BretFisher/docker-vackup/main/vackup -o /usr/local/bin/vackup && sudo chmod +x /usr/local/bin/vackup

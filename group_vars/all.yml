@@ -14,7 +14,7 @@ services:
   uptimekuma:
     subdomain: status
   watchtower:
-    telegram_url: ""
+    telegram_url:
   authentik:
     subdomain: auth
     database_password: 
@@ -23,6 +23,11 @@ services:
     subdomain: git
   etherpad:
     subdomain: pad
+  hedgedoc:
+    subdomain: md
+  onlyoffice:
+    subdomain: onlyoffice
+    secret_token: 
 
 mailer:
   smtp_addr:

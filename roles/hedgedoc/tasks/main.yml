@@ -1,0 +1,28 @@
+- name: Create Hedgedoc configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/hedgedoc/.env"
+    mode: "0644"
+
+- name: Create secrets file for Hedgedoc database password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/hedgedoc/hedgedoc_db_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Create secrets file for Hedgedoc session secret
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/hedgedoc/hedgedoc_session_secret.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Start Docker container for Hedgedoc
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/hedgedoc"
+    state: present
+  register: output

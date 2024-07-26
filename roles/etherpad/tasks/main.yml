@@ -1,0 +1,28 @@
+- name: Create Etherpad configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/etherpad/.env"
+    mode: "0644"
+
+- name: Create secrets file for Etherpad database password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/etherpad/etherpad_db_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Create secrets file for Etherpad admin password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/etherpad/etherpad_admin_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Start Docker container for Etherpad
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/etherpad"
+    state: present
+  register: output

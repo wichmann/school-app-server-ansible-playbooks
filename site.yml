@@ -1,2 +1,8 @@
-- import_playbook: initial-setup.yml
-- import_playbook: infrastructure.yml
+- name: Initial setup of the servers
+  import_playbook: initial-setup.yml
+- name: Install and configure basic infrastructure, like a reverse proxy
+  import_playbook: infrastructure.yml
+- name: Deploy all services for development and software engineering
+  import_playbook: development.yml
+- name: Deploy all tools for collaboration and education
+  import_playbook: tools.yml

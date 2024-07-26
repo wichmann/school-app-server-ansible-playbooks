@@ -1,0 +1,12 @@
+- name: Create Onlyoffice configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/onlyoffice/.env"
+    mode: "0644"
+
+- name: Start Docker container for Onlyoffice
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/onlyoffice"
+    state: present
+  register: output

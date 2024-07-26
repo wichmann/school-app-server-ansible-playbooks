@@ -1,11 +1,11 @@
 - name: create users and set permissions
-  import_tasks: user.yml
+  ansible.buildin.import_tasks: user.yml
 
 - name: import ssh tasks
-  import_tasks: ssh.yml
+  ansible.buildin.import_tasks: ssh.yml
 
 - name: install necessary packages and update all
-  import_tasks: updates.yml
+  ansible.buildin.import_tasks: updates.yml
 
 - name: Set a hostname
   become: true
@@ -28,3 +28,4 @@
   ansible.builtin.template:
     src: show_info.sh.j2
     dest: /etc/profile.d/show_info.sh
+    mode: "0644"

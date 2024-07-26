@@ -6,12 +6,21 @@ services:
   traefik:
     subdomain: dashboard
     metrics_domain: metrics
-    dashboard_user: "admin"
-    dashboard_password: "6sjGtgBr1EkX1EARfkxovKh5p"
+    dashboard_user: admin
+    dashboard_password:
   portainer:
     subdomain: portainer
-    admin_password: "6sjGtgBr1EkX1EARfkxovKh5p"
+    admin_password:
   uptimekuma:
     subdomain: status
   watchtower:
     telegram_url: ""
+  gitea:
+    subdomain: git
+  etherpad:
+    subdomain: pad
+
+mailer:
+  smtp_addr:
+  smtp_user:
+  smtp_password:

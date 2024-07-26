@@ -1,9 +1,9 @@
 # School server - Ansible playbooks
-Ansible playbooks for setting up and configuring a school's app server.
+Ansible playbooks for setting up and configuring a school's app server. These
+playbooks use Docker Compose scripts from [the Github repo "SchoolAppServer"](https://github.com/wichmann/SchoolAppServer).
 
 ## Requirements
-Install ansible first by following the official handbook:
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+Install ansible first by following the [official handbook](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html):
 
 After that you can install all ansible roles:
 

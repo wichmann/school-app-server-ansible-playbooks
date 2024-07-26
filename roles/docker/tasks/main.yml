@@ -7,7 +7,7 @@
   ansible.builtin.user:
     name: "{{ admin.name }}"
     groups: docker
-    append: yes
+    append: true
 
 # install docker-vackup
-#curl -sSL https://raw.githubusercontent.com/BretFisher/docker-vackup/main/vackup -o /usr/local/bin/vackup && sudo chmod +x /usr/local/bin/vackup
+# curl -sSL https://raw.githubusercontent.com/BretFisher/docker-vackup/main/vackup -o /usr/local/bin/vackup && sudo chmod +x /usr/local/bin/vackup

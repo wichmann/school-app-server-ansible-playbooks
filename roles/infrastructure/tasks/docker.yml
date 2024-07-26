@@ -9,16 +9,19 @@
   ansible.builtin.template:
     src: .env.j2
     dest: "{{ docker.base_dir }}/infrastructure/.env"
+    mode: "0644"
 
 - name: Create secrets file for Watchtower configuration
   ansible.builtin.copy:
     content: "{{ services.watchtower.telegram_url }}"
     dest: "{{ docker.base_dir }}/infrastructure/watchtower_telegram_url.txt"
+    mode: "0644"
 
 - name: Create secrets file for Portainer password
   ansible.builtin.copy:
     content: "{{ services.portainer.admin_password }}"
     dest: "{{ docker.base_dir }}/infrastructure/portainer_admin_password.txt"
+    mode: "0644"
 
 - name: Create HTTP basic auth credentials for Traefik dashboard
   community.general.htpasswd:
@@ -28,6 +31,7 @@
     # explicitly use secure hash "bcrypt" instead of "md5"
     # https://passlib.readthedocs.io/en/stable/lib/passlib.apache.html#passlib.apache.HtpasswdFile
     hash_scheme: bcrypt
+    mode: "0644"
 
 - name: Start Docker container for infrastructure
   community.docker.docker_compose_v2:

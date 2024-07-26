@@ -1,7 +1,7 @@
 - name: Git checkout
   become: true
   ansible.builtin.git:
-    repo: "{{ school_server_app_git_repo }}"
+    repo: "{{ infrastructure_schoolserverapp_git_repo }}"
     dest: "{{ docker.base_dir }}"
     # discard any modified files in the working repository
     force: true

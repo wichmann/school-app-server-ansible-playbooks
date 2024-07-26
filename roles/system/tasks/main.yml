@@ -1,10 +1,10 @@
-- name: create users and set permissions
+- name: Create users and set permissions
   ansible.buildin.import_tasks: user.yml
 
-- name: import ssh tasks
+- name: Configure sshd and handle ssh keys
   ansible.buildin.import_tasks: ssh.yml
 
-- name: install necessary packages and update all
+- name: Install necessary packages and update everything
   ansible.buildin.import_tasks: updates.yml
 
 - name: Set a hostname

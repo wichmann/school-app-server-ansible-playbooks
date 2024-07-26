@@ -5,9 +5,11 @@
     dest: "{{ docker.base_dir }}"
     # discard any modified files in the working repository
     force: true
+    # pin version of repo to produce reproducible runs
+    version: 3ab9579
 
 - name: Change file permission on acme.json
   become: true
   ansible.builtin.file:
     path: "{{ docker.base_dir }}/infrastructure/acme.json"
-    mode: 0600
+    mode: "0600"

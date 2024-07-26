@@ -1,7 +1,8 @@
 - name: Install and configure basic services
+  # Basic services contains reverse proxy, container management, status monitoring, automatic container updates
   hosts: schoolservers
   become: true
   remote_user: wichmann
   roles:
     - docker
-    - services
+    - infrastructure

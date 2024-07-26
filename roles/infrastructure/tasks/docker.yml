@@ -10,12 +10,12 @@
     src: .env.j2
     dest: "{{ docker.base_dir }}/infrastructure/.env"
 
-- name: Copy Watchtower configuration file
+- name: Create secrets file for Watchtower configuration
   ansible.builtin.copy:
     content: "{{ services.watchtower.telegram_url }}"
     dest: "{{ docker.base_dir }}/infrastructure/watchtower_telegram_url.txt"
 
-- name: Copy Portainer password file
+- name: Create secrets file for Portainer password
   ansible.builtin.copy:
     content: "{{ services.portainer.admin_password }}"
     dest: "{{ docker.base_dir }}/infrastructure/portainer_admin_password.txt"

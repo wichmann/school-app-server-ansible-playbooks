@@ -1,8 +1,8 @@
 - name: clone git repo with Docker Compose scripts
-  import_tasks: git.yml
+  ansible.builtin.import_tasks: git.yml
 
 - name: start basic Docker containers
-  import_tasks: docker.yml
+  ansible.builtin.import_tasks: docker.yml
 
 - name: Add cron job to start Etherpad after reboot
   ansible.builtin.cron:

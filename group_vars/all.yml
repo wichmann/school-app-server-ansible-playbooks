@@ -15,6 +15,10 @@ services:
     subdomain: status
   watchtower:
     telegram_url: ""
+  authentik:
+    subdomain: auth
+    database_password: 
+    secret_key: 
   gitea:
     subdomain: git
   etherpad:

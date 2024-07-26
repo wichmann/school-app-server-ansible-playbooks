@@ -1,0 +1,12 @@
+- name: Create Authentik configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/identity-provider/.env"
+    mode: "0644"
+
+- name: Start Docker container for Authentik
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/identity-provider"
+    state: present
+  register: output

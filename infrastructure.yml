@@ -6,3 +6,4 @@
   roles:
     - docker
     - infrastructure
+    - authentik

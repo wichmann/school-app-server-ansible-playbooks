@@ -1,0 +1,34 @@
+- name: Create Gitea configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/gitea/.env"
+    mode: "0644"
+
+- name: Create secrets file for Gitea database password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/gitea/gitea_db_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Create secrets file for Gitea metrics password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/gitea/gitea_metrics_token.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Create secrets file for Gitea SMTP password
+  ansible.builtin.copy:
+    content: "{{ mailer.smtp_password }}"
+    dest: "{{ docker.base_dir }}/gitea/gitea_smtp_password.txt"
+    mode: "0644"
+
+- name: Start Docker container for Gitea
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/gitea"
+    state: present
+  register: output

@@ -1,0 +1,7 @@
+- name: Install and configure services for development and software engineering
+  # Contains gitea, jenkins, ...
+  hosts: schoolservers
+  become: true
+  remote_user: wichmann
+  roles:
+    - gitea

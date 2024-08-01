@@ -1,15 +1,24 @@
+- name: Backup acme.json file to /tmp
+  ansible.builtin.copy:
+    src: "{{ docker.base_dir }}/infrastructure/acme.json"
+    dest: "/tmp/acme.json"
+    remote_src: true
+    mode: '0600'
+
 - name: Git checkout
   become: true
   ansible.builtin.git:
     repo: "{{ infrastructure_schoolserverapp_git_repo }}"
     dest: "{{ docker.base_dir }}"
+    # do not discard, otherwise new certificates will be generated each time the task runs!!!
     # discard any modified files in the working repository
     force: true
     # pin version of repo to produce reproducible runs
-    version: 3ab9579
+    #version: 04bbd66dba42eccd6693969d39f5a027d2c32e06
 
-- name: Change file permission on acme.json
-  become: true
-  ansible.builtin.file:
-    path: "{{ docker.base_dir }}/infrastructure/acme.json"
-    mode: "0600"
+- name: Restore acme.json file from /tmp
+  ansible.builtin.copy:
+    src: "/tmp/acme.json"
+    remote_src: true
+    dest: "{{ docker.base_dir }}/infrastructure/acme.json"
+    mode: '0600'

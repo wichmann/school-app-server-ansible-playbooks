@@ -2,7 +2,6 @@ docker:
   base_dir: "/opt/docker"
 
 services:
-  domain: brinkstrasse.schule
   traefik:
     subdomain: dashboard
     metrics_domain: metrics

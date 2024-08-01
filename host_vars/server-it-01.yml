@@ -7,3 +7,4 @@ admin:
 locale: de_DE.UTF-8
 timezone: Europe/Berlin
 hostname: server-it-01.brinkstrasse.schule
+basedomain: brinkstrasse.schule

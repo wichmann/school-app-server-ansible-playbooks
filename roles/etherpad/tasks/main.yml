@@ -26,3 +26,7 @@
     project_src: "{{ docker.base_dir }}/etherpad"
     state: present
   register: output
+
+- name: Show results
+  ansible.builtin.debug:
+    var: output

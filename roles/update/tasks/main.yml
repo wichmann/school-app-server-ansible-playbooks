@@ -1,0 +1,64 @@
+- name: Refresh cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Update distro
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    only_upgrade: true
+
+- name: Upgrade all apt packages (apt-get dist-upgrade)
+  ansible.builtin.apt:
+    upgrade: dist
+
+- name: Clear all old packages
+  ansible.builtin.apt:
+    autoclean: true
+    autoremove: true
+
+- name: Prune everything
+  community.docker.docker_prune:
+    containers: true
+    images: true
+    networks: true
+    volumes: true
+    builder_cache: true
+
+- name: Get running containers
+  community.docker.docker_host_info:
+    containers: true
+  register: docker_info
+
+- name: Pull image for Etherpad
+  community.docker.docker_compose_v2_pull:
+    project_src: "{{ docker.base_dir }}/etherpad"
+
+- name: Start Docker container for Etherpad
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/etherpad"
+    state: present
+  register: output
+
+- name: Pull image for Authentik
+  community.docker.docker_compose_v2_pull:
+    project_src: "{{ docker.base_dir }}/identity-provider"
+
+- name: Start Docker container for Authentik
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/identity-provider"
+    state: present
+  register: output
+
+# - name: Show results
+#  ansible.builtin.debug:
+#    var: output
+
+# - name: Pull images for flask project
+#  community.docker.docker_compose_v2_pull:
+#    project_src: /path/to/flask
+# - name: Stop running containers
+#  community.docker.docker_container:
+#    name: "{{ item }}"
+#    state: stopped
+#  loop: "{{ docker_info.containers | map(attribute='Id') | list }}"

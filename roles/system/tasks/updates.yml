@@ -1,18 +1,18 @@
 - name: Install apt packages
   become: true
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     name: "{{ basic_packages }}"
     state: present
 
 - name: Upgrade all apt packages
   become: true
-  apt:
+  ansible.builtin.apt:
     force_apt_get: yes
     upgrade: dist
 
 - name: All packages installed.
-  debug:
+  ansible.builtin.debug:
     msg: Packages have been successfully installed
 
 - name: Copy script to update manually

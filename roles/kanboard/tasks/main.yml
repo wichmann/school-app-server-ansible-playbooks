@@ -1,0 +1,20 @@
+- name: Create Kanboard configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/kanboard/.env"
+    mode: "0644"
+
+- name: Create secrets file for Kanboard SMTP password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/kanboard/kanboard_smtp_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Start Docker container for Kanboard
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/kanboard"
+    state: present
+  register: output

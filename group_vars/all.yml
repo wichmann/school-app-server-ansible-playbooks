@@ -20,10 +20,16 @@ services:
     secret_key: 
   gitea:
     subdomain: git
+  jenkins:
+    subdomain: jenkins
+  kanboard:
+    subdomain: kanboard
   etherpad:
     subdomain: pad
   hedgedoc:
     subdomain: md
+  hesk:
+    subdomain: hesk
   onlyoffice:
     subdomain: onlyoffice
     secret_token: 

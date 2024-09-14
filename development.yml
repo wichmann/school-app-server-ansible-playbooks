@@ -5,3 +5,6 @@
   remote_user: wichmann
   roles:
     - gitea
+    - jenkins
+    - kanboard
+    - hesk

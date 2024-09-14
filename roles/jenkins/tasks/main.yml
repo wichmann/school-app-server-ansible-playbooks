@@ -1,0 +1,12 @@
+- name: Create Jenkins configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/jenkins/.env"
+    mode: "0644"
+
+- name: Start Docker container for Jenkins
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/jenkins"
+    state: present
+  register: output

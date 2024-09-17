@@ -1,0 +1,54 @@
+services:
+  hesk:
+    # Hesk - Help Desk Software HESK
+    image: ${HESK_IMAGE}
+    restart: unless-stopped
+    depends_on:
+      - hesk-db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.{{ hesk_instance_subdomain }}.loadbalancer.server.port=8080"
+      - "traefik.http.routers.{{ hesk_instance_subdomain }}.rule=Host(`${HESK_DOMAIN}`)"
+      - "traefik.http.routers.{{ hesk_instance_subdomain }}.tls=true"
+      - "traefik.http.routers.{{ hesk_instance_subdomain }}.tls.certresolver=letsencrypt"
+    volumes:
+     - ./html:/var/www/html
+     #- nginx-server.conf:/etc/nginx/conf.d/server.conf
+     #- php-setting.ini:/etc/php83/conf.d/settings.ini
+     #- php-fpm-settings.conf:/etc/php83/php-fpm.d/server.conf
+    networks:
+      - hesk_net
+
+  hesk-db:
+    image: ${HESK_DB_IMAGE}
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW --innodb_read_only_compressed=OFF
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - hesk_db_data:/var/lib/mysql
+    networks:
+      - hesk_net
+    environment:
+      - MARIADB_USER=hesk
+      - MARIADB_PASSWORD_FILE=/run/secrets/hesk_db_password
+      - MARIADB_DATABASE=hesk
+      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/hesk_db_root_password
+    secrets:
+      - hesk_db_password
+      - hesk_db_root_password
+
+volumes:
+  hesk_db_data:
+
+networks:
+  hesk_net:
+    # https://docs.docker.com/compose/networking/#use-a-pre-existing-network
+    name: infrastructure_default
+    external: true
+
+secrets:
+  hesk_db_password:
+    file: hesk_db_password.txt
+  hesk_db_root_password:
+    file: hesk_db_root_password.txt

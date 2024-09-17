@@ -1,44 +1,11 @@
-- name: Create Hesk configuration file
-  become: true
-  ansible.builtin.template:
-    src: .env.j2
-    dest: "{{ docker.base_dir }}/hesk/.env"
-    mode: "0644"
-
-- name: Print message for user to download Hesk
+- name: Output all classes for which to start a Hesk instance
   ansible.builtin.debug:
-    msg: Please download Hesk from https://hesk.com/download.php.
+    msg: "Creating Hesk instance at {{ docker.base_dir }}/hesk-{{ item | lower }}"
+  loop: "{{ hesk_class_list }}"
 
-- name: Unzip Hesk source
-  ansible.builtin.unarchive:
-    src: files/hesk.zip
-    dest: "{{ docker.base_dir }}/hesk/html"
-    mode: "0777"
-
-- name: Create secrets file for Hesk database password
-  ansible.builtin.copy:
-    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
-    dest: "{{ docker.base_dir }}/hesk/hesk_db_password.txt"
-    mode: "0644"
-    # do not replace file if it already exists
-    force: false
-
-- name: Create secrets file for Hesk session secret
-  ansible.builtin.copy:
-    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
-    dest: "{{ docker.base_dir }}/hesk/hesk_db_root_password.txt"
-    mode: "0644"
-    # do not replace file if it already exists
-    force: false
-
-- name: Start Docker container for Hesk
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker.base_dir }}/hesk"
-    state: present
-  register: output
-
-- name: Print message for user to open Hesk in browser
-  ansible.builtin.debug:
-    msg: >
-      "Please open the URL https://{{ services.hesk.subdomain }}.{{ basedomain }}/install in your web browser."
-      "After that execute the command: rm -rf /opt/docker/hesk/html/install/ on the server."
+- name: Install and configure a Hesk instance for each class
+  ansible.builtin.include_tasks: install.yml
+  vars:
+    hesk_instance_base_dir: "{{ docker.base_dir }}/hesk-{{ item | lower }}"
+    hesk_instance_subdomain: "hesk-{{ item | lower }}"
+  loop: "{{ hesk_class_list }}"

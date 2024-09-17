@@ -1,0 +1,58 @@
+- name: Copy complete Docker directory for new Hesk instance
+  ansible.builtin.copy:
+    src: "{{ docker.base_dir }}/hesk/"
+    dest: "{{ hesk_instance_base_dir }}"
+    remote_src: true
+    mode: "0644"
+
+- name: Create Hesk configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ hesk_instance_base_dir }}/.env"
+    mode: "0644"
+
+- name: Create Hesk Docker compose file (done here, because we need multiple instances!)
+  become: true
+  ansible.builtin.template:
+    src: docker-compose.yml
+    dest: "{{ hesk_instance_base_dir }}/docker-compose.yml"
+    mode: "0644"
+
+- name: Print message for user to download Hesk
+  ansible.builtin.debug:
+    msg: Please download Hesk from https://hesk.com/download.php.
+
+- name: Unzip Hesk source
+  ansible.builtin.unarchive:
+    src: files/hesk.zip
+    dest: "{{ hesk_instance_base_dir }}/html"
+    mode: "0777"
+
+- name: Create secrets file for Hesk database password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ hesk_instance_base_dir }}/hesk_db_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Create secrets file for Hesk session secret
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ hesk_instance_base_dir }}/hesk_db_root_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Start Docker container for Hesk
+  community.docker.docker_compose_v2:
+    project_src: "{{ hesk_instance_base_dir }}"
+    state: present
+  register: output
+
+- name: Print message for user to open Hesk in browser
+  ansible.builtin.debug:
+    msg: >
+      "Please open the URL https://{{ hesk_instance_subdomain }}.{{ basedomain }}/install in your web browser."
+      "After that execute the command: rm -rf /opt/docker/hesk/html/install/ on the server."

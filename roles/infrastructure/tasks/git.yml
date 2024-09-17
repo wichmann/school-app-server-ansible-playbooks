@@ -1,20 +1,31 @@
+- name: Check if acme.json already exists (important for first run!)
+  ansible.builtin.stat:
+    path: "{{ docker.base_dir }}/infrastructure/acme.json"
+  register: certfile
+
 - name: Backup acme.json file to /tmp
   ansible.builtin.copy:
     src: "{{ docker.base_dir }}/infrastructure/acme.json"
     dest: "/tmp/acme.json"
     remote_src: true
     mode: '0600'
+  when: certfile.stat.exists
 
 - name: Git checkout
   become: true
   ansible.builtin.git:
+    # noqa: latest
     repo: "{{ infrastructure_schoolserverapp_git_repo }}"
     dest: "{{ docker.base_dir }}"
-    # do not discard, otherwise new certificates will be generated each time the task runs!!!
     # discard any modified files in the working repository
     force: true
     # pin version of repo to produce reproducible runs
-    #version: 04bbd66dba42eccd6693969d39f5a027d2c32e06
+    # version: 04bbd66dba42eccd6693969d39f5a027d2c32e06
+
+- name: Set file permissions for acme.json, important on first run!
+  ansible.builtin.file:
+    path: "{{ docker.base_dir }}/infrastructure/acme.json"
+    mode: '0600'
 
 - name: Restore acme.json file from /tmp
   ansible.builtin.copy:
@@ -22,3 +33,4 @@
     remote_src: true
     dest: "{{ docker.base_dir }}/infrastructure/acme.json"
     mode: '0600'
+  when: certfile.stat.exists

@@ -1,0 +1,43 @@
+- name: Print message for user
+  ansible.builtin.debug:
+    msg: Configuring the firewall...
+
+# ufw supports connection rate limiting, which is useful for protecting
+# against brute-force login attacks. ufw will deny connections if an IP
+# address has attempted to initiate 6 or more connections in the last
+# 30 seconds. See  http://www.debian-administration.org/articles/187
+# for details. Typical usage is:
+- name: Setup rate limiting for SSH
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Allow OpenSSH
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow all access to tcp port 80
+  community.general.ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Allow all access to tcp port 443
+  community.general.ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
+- name: Outgoing allow
+  community.general.ufw:
+    state: enabled
+    direction: outgoing
+    policy: allow
+
+- name: Incoming deny
+  community.general.ufw:
+    state: enabled
+    direction: incoming
+    policy: deny

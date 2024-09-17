@@ -1,4 +1,4 @@
-basic_packages:
+system_basic_packages:
   - vim
   - nano
   - wget
@@ -22,3 +22,4 @@ basic_packages:
   - ncdu
   - update-notifier-common
   - unattended-upgrades
+  - crowdsec

@@ -1,16 +1,16 @@
 - name: Add a new admin user '{{ admin.name }}'
   become: true
-  #become_method: sudo
+  # become_method: sudo
   ansible.builtin.user:
     name: "{{ admin.name }}"
     comment: "{{ admin.fullname }}"
     shell: /bin/bash
     groups: sudo
-    append: yes
+    append: true
 
 - name: Enable passwordless sudo for admin user '{{ admin.name }}'
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present
     regexp: "^{{ admin.name }}"

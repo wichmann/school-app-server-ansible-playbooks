@@ -1,6 +1,6 @@
 - name: Maintain and update the server and all services
   hosts: schoolservers
   become: true
-  remote_user: wichmann
+  remote_user: "{{ admin.name }}"
   roles:
     - update

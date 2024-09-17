@@ -1,11 +1,11 @@
 - name: Add SSH public key
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ admin.name }}"
     key: "{{ admin.key }}"
 
 - name: Disable root SSH login
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^PermitRootLogin"
     line: "PermitRootLogin no"
@@ -16,7 +16,7 @@
 
 - name: Only allow SSH key authentication
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regex: "^AuthenticationMethods"
     line: "AuthenticationMethods publickey"
@@ -27,7 +27,7 @@
 
 - name: Disable SSH password authentication
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^PasswordAuthentication"
     line: "PasswordAuthentication no"

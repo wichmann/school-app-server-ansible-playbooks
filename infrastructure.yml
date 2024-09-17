@@ -2,8 +2,9 @@
   # Basic services contains reverse proxy, container management, status monitoring, automatic container updates
   hosts: schoolservers
   become: true
-  remote_user: wichmann
+  remote_user: "{{ admin.name }}"
   roles:
     - docker
     - infrastructure
     - authentik
+    - firewall

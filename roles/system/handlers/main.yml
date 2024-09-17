@@ -1,9 +1,9 @@
-- name: restart sshd
+- name: Restart sshd
   become: true
-  service:
+  ansible.builtin.service:
     name: ssh
     state: restarted
 
-- name: update resolvconf
+- name: Update resolvconf
   become: true
-  command: resolvconf -u
+  ansible.builtin.command: resolvconf -u

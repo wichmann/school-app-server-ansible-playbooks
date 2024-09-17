@@ -1,14 +1,14 @@
 - name: Install apt packages
   become: true
   ansible.builtin.apt:
-    update_cache: yes
-    name: "{{ basic_packages }}"
+    update_cache: true
+    name: "{{ system_basic_packages }}"
     state: present
 
 - name: Upgrade all apt packages
   become: true
   ansible.builtin.apt:
-    force_apt_get: yes
+    force_apt_get: true
     upgrade: dist
 
 - name: All packages installed.
@@ -20,3 +20,4 @@
   ansible.builtin.copy:
     src: files/update.sh
     dest: /root/update.sh
+    mode: "0644"

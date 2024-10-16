@@ -8,3 +8,6 @@
     - infrastructure
     - authentik
     - firewall
+    - role: monitoring
+      tags:
+        - monitoring

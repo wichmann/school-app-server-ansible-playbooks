@@ -1,0 +1,15 @@
+- name: Install Alloy
+  ansible.builtin.include_role:
+    name: grafana.grafana.alloy
+
+- name: Create configuration file for Alloy from template
+  become: true
+  ansible.builtin.template:
+    src: config.alloy.j2
+    dest: "/etc/alloy/config.alloy"
+    mode: "0644"
+
+- name: Restart Alloy to use new configuration
+  ansible.builtin.service:
+    name: alloy
+    state: restarted

@@ -18,6 +18,11 @@ services:
 
     ansible-playbook site.yml
 
+It is possible to run only roles with certain tags from a given playbook on chosen
+hosts, e.g.:
+
+    ansible-playbook infrastructure.yml --limit server-it-01 --tags "monitoring"
+
 ## Useful commands
 Show full inventory with all variables:
 

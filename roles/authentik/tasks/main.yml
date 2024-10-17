@@ -1,8 +1,32 @@
 - name: Create Authentik configuration file
+  # Authentik in Docker Compose: https://youtu.be/O1qUbrk4Yc8
   become: true
   ansible.builtin.template:
     src: .env.j2
     dest: "{{ docker.base_dir }}/identity-provider/.env"
+    mode: "0644"
+
+- name: Copy favicon image into Authentik media volume
+  # TODO: Find a better way to provide files for Authentik (directory as volume, docker cp, ...)
+  # Branding Authentik: https://www.youtube.com/watch?v=b7yAYUfUNpY
+  become: true
+  ansible.builtin.copy:
+    src: files/icon.png
+    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/icon.png
+    mode: "0644"
+
+- name: Copy logo file into Authentik media volume
+  become: true
+  ansible.builtin.copy:
+    src: files/logo.svg
+    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/logo.svg
+    mode: "0644"
+
+- name: Copy background image for Authentik
+  become: true
+  ansible.builtin.copy:
+    src: files/background.jpeg
+    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/background.jpeg
     mode: "0644"
 
 - name: Start Docker container for Authentik

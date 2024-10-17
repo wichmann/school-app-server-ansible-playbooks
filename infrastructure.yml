@@ -6,8 +6,12 @@
   roles:
     - docker
     - infrastructure
-    - authentik
-    - firewall
+    - role: authentik
+      tags:
+        - security
+    - role: firewall
+      tags:
+        - security
     - role: monitoring
       tags:
         - monitoring

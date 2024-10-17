@@ -1,6 +1,7 @@
 system_basic_packages:
   - vim
   - nano
+  - mc
   - wget
   - curl
   - zsh

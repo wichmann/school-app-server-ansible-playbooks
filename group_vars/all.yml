@@ -18,6 +18,7 @@ services:
     subdomain: auth
     database_password: 
     secret_key: 
+    token: 
   gitea:
     subdomain: git
   jenkins:

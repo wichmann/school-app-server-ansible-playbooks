@@ -15,3 +15,6 @@
     - role: monitoring
       tags:
         - monitoring
+    - role: crowdsec
+      tags:
+        - security

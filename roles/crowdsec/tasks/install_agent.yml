@@ -1,0 +1,37 @@
+- name: Add crowdsec apt-key
+  ansible.builtin.apt_key:
+    url: https://packagecloud.io/crowdsec/crowdsec/gpgkey
+    state: present
+
+# https://packagecloud.io/crowdsec/crowdsec/install#manual-deb
+- name: Add crowdsec apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://packagecloud.io/crowdsec/crowdsec/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main
+    state: present
+    filename: crowdsec
+    update_cache: true
+
+- name: Install crowdsec
+  ansible.builtin.apt:
+    name: crowdsec
+    state: present
+    update_cache: true
+
+- name: Install Traefik collection to parse it's log files
+  ansible.builtin.command: "cscli collections install crowdsecurity/traefik"
+  notify:
+    - Reload crowdsec
+
+- name: Write configuration file to aquire and parse Traefik log files
+  ansible.builtin.copy:
+    dest: /etc/crowdsec/acquis.d/traefik.yaml
+    mode: "0644"
+    content: |
+      ---
+      source: file
+      filenames:
+        - /var/log/traefik/*.log
+      labels:
+        type: traefik
+  notify:
+    - Restart crowdsec

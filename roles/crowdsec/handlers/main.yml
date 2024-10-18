@@ -1,0 +1,14 @@
+- name: Reload crowdsec
+  ansible.builtin.service:
+    name: crowdsec
+    state: reloaded
+
+- name: Reload alloy
+  ansible.builtin.service:
+    name: alloy
+    state: reloaded
+
+- name: Restart crowdsec
+  ansible.builtin.service:
+    name: crowdsec
+    state: restarted

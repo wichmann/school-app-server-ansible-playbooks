@@ -1,0 +1,5 @@
+- name: Install firewall bouncer
+  ansible.builtin.apt:
+    name: crowdsec-firewall-bouncer-nftables
+    state: present
+    update_cache: true

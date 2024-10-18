@@ -32,6 +32,15 @@ Try to log in to all servers in group:
 
     ansible schoolservers -m ping
 
+Simple tasks can be executed manually as [ad hoc commands](https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html):
+
+    ansible server-it-01 -a "/sbin/reboot" -u wichmann
+    ansible server-it-01 -m ansible.builtin.copy -a "src=/etc/hosts dest=/tmp/hosts" -u wichmann
+    ansible schoolservers -m ansible.builtin.apt -a "force_apt_get: true upgrade: dist" -u wichmann
+    ansible schoolservers -a "sudo systemctl reload alloy" -u wichmann
+    ansible schoolservers -m ansible.builtin.service -a "name=alloy state=reloaded" -u wichmann
+    ansible all -m ansible.builtin.setup -u wichmann
+
 ## Links
 
 * Best practices for directory layout: https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html#content-organization

@@ -49,3 +49,7 @@ mailer:
   smtp_addr:
   smtp_user:
   smtp_password:
+
+telegram: 
+  chatid: 000000000
+  token: 0000000000:xxxxxxx-xxxxxxxxxx-xxxxxxxxxxxxxxxx

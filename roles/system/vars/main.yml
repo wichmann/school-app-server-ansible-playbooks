@@ -24,3 +24,5 @@ system_basic_packages:
   - update-notifier-common
   - unattended-upgrades
   - crowdsec
+  - gnupg
+  - apt-transport-https

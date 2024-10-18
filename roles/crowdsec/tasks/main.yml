@@ -43,3 +43,16 @@
       }
   notify:
     - Reload alloy
+
+- name: Setup cronjob to update crowdsec collections
+  ansible.builtin.cron:
+    name: "update Crowdsec collections"
+    hour: 3
+    minute: 0
+    job: "cscli hub update && cscli hub upgrade --force >/dev/null 2>&1"
+
+- name: Create API key for Crowdsec Local API to be used in Traefik bouncer plugin
+  ansible.builtin.shell:
+    cmd: "cscli bouncers add crowdsecTraefikBouncer -o raw > {{ docker.base_dir }}/infrastructure/traefik_bouncer_api_key.txt"
+    creates: "{{ docker.base_dir }}/infrastructure/traefik_bouncer_api_key.txt"
+  tags: console

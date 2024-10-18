@@ -13,7 +13,7 @@
 
 - name: Create secrets file for Watchtower configuration
   ansible.builtin.copy:
-    content: "{{ services.watchtower.telegram_url }}"
+    content: "telegram://{{ telegram.token }}@telegram/?channels={{ telegram.chatid }}"
     dest: "{{ docker.base_dir }}/infrastructure/watchtower_telegram_url.txt"
     mode: "0644"
 

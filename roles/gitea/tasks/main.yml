@@ -23,7 +23,7 @@
 
 - name: Create secrets file for Gitea SMTP password
   ansible.builtin.copy:
-    content: "{{ mailer.smtp_password }}"
+    content: "{{ mail.smtp_password }}"
     dest: "{{ docker.base_dir }}/gitea/gitea_smtp_password.txt"
     mode: "0644"
 

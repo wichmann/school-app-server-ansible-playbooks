@@ -9,22 +9,27 @@ services:
     dashboard_password:
   portainer:
     subdomain: portainer
+    admin_username: admin # not used in playbooks!
     admin_password:
   uptimekuma:
     subdomain: status
-  watchtower:
-    telegram_url:
+    admin_password:  # not used in playbooks!
   authentik:
     subdomain: auth
     database_password: 
     secret_key: 
     token: 
+    admin_username: akadmin # not used in playbooks!
+    admin_password:  # not used in playbooks!
   gitea:
     subdomain: git
+    admin_password:  # not used in playbooks!
   jenkins:
     subdomain: jenkins
+    admin_password:  # not used in playbooks!
   kanboard:
     subdomain: kanboard
+    admin_password:  # not used in playbooks!
   etherpad:
     subdomain: pad
   hedgedoc:
@@ -38,14 +43,14 @@ services:
 monitoring:
   metrics:
     url: "https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push"
-    username: "000000"
-    password: "token"
+    username:
+    password:
   logs:
     url: "https://logs-prod-eu-west-0.grafana.net/loki/api/v1/push"
-    username: "000000"
-    password: "token"
+    username:
+    password:
 
-mailer:
+mail:
   smtp_addr:
   smtp_user:
   smtp_password:

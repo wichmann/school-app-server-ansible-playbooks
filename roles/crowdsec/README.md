@@ -13,3 +13,4 @@ Sources:
  - https://doc.crowdsec.net/u/bouncers/firewall/
  - https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin
  - https://github.com/crowdsecurity/grafana-dashboards/
+ - https://goneuland.de/traefik-v2-3-reverse-proxy-mit-crowdsec-im-stack-einrichten/

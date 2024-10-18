@@ -7,3 +7,4 @@
 - name: Update resolvconf
   become: true
   ansible.builtin.command: resolvconf -u
+  changed_when: true

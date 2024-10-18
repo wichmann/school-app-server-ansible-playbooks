@@ -3,6 +3,7 @@
   hosts: schoolservers
   become: true
   remote_user: "{{ admin.name }}"
+  tags: development
   roles:
     - gitea
     - jenkins

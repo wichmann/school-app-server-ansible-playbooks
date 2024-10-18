@@ -2,6 +2,7 @@
   hosts: schoolservers
   become: true
   remote_user: root
+  tags: system
   roles:
     - role: system
     - role: hifis.unattended-upgrades

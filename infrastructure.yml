@@ -4,17 +4,15 @@
   become: true
   remote_user: "{{ admin.name }}"
   roles:
-    - docker
-    - infrastructure
-    - role: authentik
-      tags:
-        - security
+    - role: docker
+      tags: docker
+    - role: infrastructure
+      tags: docker
     - role: firewall
-      tags:
-        - security
+      tags: security
     - role: monitoring
-      tags:
-        - monitoring
+      tags: monitoring
     - role: crowdsec
-      tags:
-        - security
+      tags: security
+    - role: authentik
+      tags: security

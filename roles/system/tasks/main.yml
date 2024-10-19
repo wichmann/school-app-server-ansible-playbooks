@@ -26,6 +26,10 @@
     name: "{{ locale }}"
     state: present
 
+- name: Set as given locale as default locale
+  ansible.builtin.command: "localectl set-locale LANG={{ locale }}"
+  changed_when: true # set locale each run of the playbook
+
 - name: Create profile.d configuration
   become: true
   ansible.builtin.template:

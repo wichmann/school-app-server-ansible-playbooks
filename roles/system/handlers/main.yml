@@ -7,4 +7,4 @@
 - name: Update resolvconf
   become: true
   ansible.builtin.command: resolvconf -u
-  changed_when: true
+  changed_when: true # execute resolvconf on each run of the playbook

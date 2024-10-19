@@ -16,7 +16,7 @@ import yaml
 import requests
 
 
-BASE_URL = 'https://auth.xxx.com'
+BASE_URL = 'https://auth.brinkstrasse.schule'
 
 
 def import_user_list():

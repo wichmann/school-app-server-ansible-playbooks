@@ -25,40 +25,18 @@
     volumes: true
     builder_cache: true
 
-- name: Get running containers
-  community.docker.docker_host_info:
-    containers: true
-  register: docker_info
+- name: Output debug message for all containers that are getting pulled
+  ansible.builtin.debug:
+    msg: "Pulling {{ item }}..."
+  loop: "{{ update_docker_stacks }}"
 
 - name: Pull image for Etherpad
   community.docker.docker_compose_v2_pull:
-    project_src: "{{ docker.base_dir }}/etherpad"
+    project_src: "{{ docker.base_dir }}/{{ item }}"
+  loop: "{{ update_docker_stacks }}"
 
 - name: Start Docker container for Etherpad
   community.docker.docker_compose_v2:
-    project_src: "{{ docker.base_dir }}/etherpad"
+    project_src: "{{ docker.base_dir }}/{{ item }}"
     state: present
-  register: output
-
-- name: Pull image for Authentik
-  community.docker.docker_compose_v2_pull:
-    project_src: "{{ docker.base_dir }}/identity-provider"
-
-- name: Start Docker container for Authentik
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker.base_dir }}/identity-provider"
-    state: present
-  register: output
-
-# - name: Show results
-#  ansible.builtin.debug:
-#    var: output
-
-# - name: Pull images for flask project
-#  community.docker.docker_compose_v2_pull:
-#    project_src: /path/to/flask
-# - name: Stop running containers
-#  community.docker.docker_container:
-#    name: "{{ item }}"
-#    state: stopped
-#  loop: "{{ docker_info.containers | map(attribute='Id') | list }}"
+  loop: "{{ update_docker_stacks }}"

@@ -1,0 +1,9 @@
+update_docker_stacks:
+  - etherpad
+  - gitea
+  - hedgedoc
+  - identity-provider
+  - infrastructure
+  - jenkins
+  - kanboard
+  - onlyoffice

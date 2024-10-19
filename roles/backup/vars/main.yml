@@ -1,0 +1,21 @@
+backup_volumes:
+  - etherpad_etherpad_data
+  - etherpad_etherpad_db_data
+  - gitea_gitea_data
+  - gitea_gitea_db_data
+  - hedgedoc_hedgedoc_db_data
+  - hedgedoc_hedgedoc_uploads
+  - identity-provider_authentik_database
+  - identity-provider_authentik_media
+  - identity-provider_authentik_redis
+  - identity-provider_authentik_templates
+  - infrastructure_portainer_data
+  - infrastructure_uptime_kuma
+  - jenkins_jenkins_home
+  - kanboard_kanboard_data
+  - kanboard_kanboard_plugins
+  - kanboard_kanboard_ssl
+  - onlyoffice_onlyoffice_data
+  - onlyoffice_onlyoffice_db
+  - onlyoffice_onlyoffice_lib
+  - onlyoffice_onlyoffice_logs

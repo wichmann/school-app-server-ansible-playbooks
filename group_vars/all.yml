@@ -1,6 +1,9 @@
 docker:
   base_dir: "/opt/docker"
 
+backup:
+  directory: "/backup"
+
 services:
   traefik:
     subdomain: dashboard

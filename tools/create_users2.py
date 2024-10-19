@@ -33,7 +33,7 @@ def load_API_token():
 
 
 configuration = authentik_client.Configuration(
-    host='https://auth.xxx.com/api/v3',
+    host='https://auth.brinkstrasse.schule/api/v3',
     access_token=load_API_token()
 )
 

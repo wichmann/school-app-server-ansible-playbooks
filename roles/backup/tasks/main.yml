@@ -1,0 +1,30 @@
+- name: Create directory for storing backups
+  ansible.builtin.file:
+    path: "{{ backup.directory }}"
+    state: directory
+    mode: "0644"
+
+- name: Find all backup archives that are older than 10 days
+  ansible.builtin.find:
+    path: "{{ backup.directory }}"
+    age: 10d
+    recurse: true
+  register: old_backup_archives
+
+- name: Output debug message when deleting an old backup archive
+  ansible.builtin.debug:
+    msg: "Deleting file: {{ item.path }}"
+  with_items: "{{ old_backup_archives.files }}"
+
+- name: Delete all old backup files
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ old_backup_archives.files }}"
+
+- name: Backup all volumes into tar.gz
+  ansible.builtin.command:
+    # TODO: Check whether to use "tar czvf /backup/xxx.tar.gz --directory /data .
+    cmd: "docker run --rm -v {{ item }}:/data:ro -v {{ backup.directory }}:/backup busybox tar -czvf /backup/{{ item }}_{{ ansible_date_time.date }}.tar.gz /data"
+  changed_when: true
+  loop: "{{ backup_volumes }}"

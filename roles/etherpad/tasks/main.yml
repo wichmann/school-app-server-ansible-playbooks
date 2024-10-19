@@ -30,3 +30,4 @@
 - name: Show results
   ansible.builtin.debug:
     var: output
+  when: false

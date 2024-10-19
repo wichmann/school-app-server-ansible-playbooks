@@ -1,3 +1,3 @@
 # TODO
 - Check whether to use cloud-init for initial preparation (https://cloudinit.readthedocs.io/en/latest/).
-- Rename role "services".
+- Write playbook for executing backups for container volumes.

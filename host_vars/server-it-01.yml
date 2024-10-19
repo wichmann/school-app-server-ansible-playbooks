@@ -1,7 +1,6 @@
 admin:
   name: wichmann
   fullname: Christian Wichmann
-  #key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   email: "wichmann@bbs-os-brinkstr.de"
 locale: de_DE.UTF-8

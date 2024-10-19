@@ -4,18 +4,13 @@
     - agent
 
 - name: Disable pushing information to the central API
-  ansible.builtin.command: "cscli console disable custom manual tainted context console_management"
+  ansible.builtin.command: "cscli console disable custom manual tainted"
   register: output
-  # changed_when: output
+  changed_when: true # execute command on each run of the playbook
   notify:
     - Reload crowdsec
   tags:
     - console
-
-- name: Install bouncers
-  ansible.builtin.include_tasks: install_bouncers.yml
-  tags:
-    - bouncers
 
 - name: Copy notification configuration to /etc/crowdsec/notifications
   # Source: https://docs.crowdsec.net/docs/notification_plugins/telegram
@@ -26,20 +21,20 @@
     mode: "0644"
 
 - name: Add telegram notification to Crowdsec configuration
-  ansible.builtin.lineinfile:
+  ansible.builtin.replace:
     path: "/etc/crowdsec/profiles.yaml"
-    insertafter: "notifications:"
-    line: " - telegram"
+    regexp: "^# notifications:"
+    replace: "notifications:\n  - telegram\n"
 
 - name: Add Grafana Alloy config for scraping Prometheus metrics from Crowdsec
-  ansible.builtin.lineinfile:
+  ansible.builtin.blockinfile:
     path: "/etc/alloy/config.alloy"
-    line: |
+    block: |
       prometheus.scrape "crowdsec" {
         targets = [{
           __address__ = "127.0.0.1:6060",
         }]
-        forward_to = [prometheus.remote_write.default.receiver]
+        forward_to = [prometheus.remote_write.metrics_service.receiver]
       }
   notify:
     - Reload alloy
@@ -51,8 +46,7 @@
     minute: 0
     job: "cscli hub update && cscli hub upgrade --force >/dev/null 2>&1"
 
-- name: Create API key for Crowdsec Local API to be used in Traefik bouncer plugin
-  ansible.builtin.shell:
-    cmd: "cscli bouncers add crowdsecTraefikBouncer -o raw > {{ docker.base_dir }}/infrastructure/traefik_bouncer_api_key.txt"
-    creates: "{{ docker.base_dir }}/infrastructure/traefik_bouncer_api_key.txt"
-  tags: console
+- name: Install bouncers
+  ansible.builtin.include_tasks: install_bouncers.yml
+  tags:
+    - bouncers

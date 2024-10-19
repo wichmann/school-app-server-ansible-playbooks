@@ -37,7 +37,7 @@ format: |
                   "url": "https://www.shodan.io/host/{{ "{{ $V -}}" }}"
               },
               {
-                  "text": "See {{ $V }} on crowdsec.net",
+                  "text": "See {{ "{{ $V }}" }} on crowdsec.net",
                   "url": "https://app.crowdsec.net/cti/{{ "{{ $V -}}" }}"
               }
           ]{{ "{{if lt $i ( sub $arrLength 1) }},{{end }}" }}

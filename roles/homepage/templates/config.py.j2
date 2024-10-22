@@ -1,0 +1,18 @@
+# set all config options and predefined constants for evreg
+SECRET_KEY = '{{ services.homepage.evreg.secret_key }}'
+RECAPTCHA_PUBLIC_KEY = '{{ services.homepage.evreg.recaptcha_public }}'
+RECAPTCHA_PRIVATE_KEY = '{{ services.homepage.evreg.recaptcha_private }}'
+SQLALCHEMY_DATABASE_URI = '{{ services.homepage.evreg.database_uri }}'
+
+EMAIL_SENDER_NAME = '{{ services.homepage.email.sender_name }}'
+EMAIL_SENDER_USER = '{{ services.homepage.email.sender_user }}'
+EMAIL_SENDER_DOMAIN = '{{ services.homepage.email.sender_domain }}'
+EMAIL_SUBJECT = '{{ services.homepage.email.subject }}'
+
+EMAIL_SERVER_HOST = '{{ services.homepage.email.host }}'
+EMAIL_SERVER_PORT = {{ services.homepage.email.port }}
+EMAIL_SERVER_USER = '{{ services.homepage.email.user }}'
+EMAIL_SERVER_PASSWORD = '{{ services.homepage.email.password }}'
+
+SHOW_LIST_PASSWORD = '{{ services.homepage.evreg.list_password }}'
+ENLIST_OPEN = '{{ services.homepage.evreg.enlist_open }}'

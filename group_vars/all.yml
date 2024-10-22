@@ -16,23 +16,23 @@ services:
     admin_password:
   uptimekuma:
     subdomain: status
-    admin_password:  # not used in playbooks!
+    admin_password: # not used in playbooks!
   authentik:
     subdomain: auth
-    database_password: 
-    secret_key: 
-    token: 
+    database_password:
+    secret_key:
+    token:
     admin_username: akadmin # not used in playbooks!
-    admin_password:  # not used in playbooks!
+    admin_password: # not used in playbooks!
   gitea:
     subdomain: git
-    admin_password:  # not used in playbooks!
+    admin_password: # not used in playbooks!
   jenkins:
     subdomain: jenkins
-    admin_password:  # not used in playbooks!
+    admin_password: # not used in playbooks!
   kanboard:
     subdomain: kanboard
-    admin_password:  # not used in playbooks!
+    admin_password: # not used in playbooks!
   etherpad:
     subdomain: pad
   hedgedoc:
@@ -41,7 +41,25 @@ services:
     subdomain: hesk
   onlyoffice:
     subdomain: onlyoffice
-    secret_token: 
+    secret_token:
+  homepage:
+    domain:
+    evreg:
+      secret_key:
+      recaptcha_public:
+      recaptcha_private:
+      database_uri:
+      list_password:
+      enlist_open:
+    email:
+      sender_name:
+      sender_user:
+      sender_domain:
+      subject:
+      host:
+      port: 465
+      user:
+      password:
 
 monitoring:
   metrics:
@@ -58,6 +76,6 @@ mail:
   smtp_user:
   smtp_password:
 
-telegram: 
+telegram:
   chatid: 000000000
   token: 0000000000:xxxxxxx-xxxxxxxxxx-xxxxxxxxxxxxxxxx

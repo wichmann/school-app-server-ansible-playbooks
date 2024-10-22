@@ -1,0 +1,37 @@
+- name: Create directory for storing backups
+  ansible.builtin.file:
+    path: "{{ docker.base_dir }}/homepage/"
+    state: directory
+    mode: "0644"
+
+- name: Create configuration file for homepage
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/homepage/.env"
+    mode: "0644"
+
+- name: Copy Docker Compose file
+  become: true
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker.base_dir }}/homepage/docker-compose.yml"
+    mode: "0644"
+
+- name: Copy evreg configuration file
+  become: true
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: "{{ docker.base_dir }}/homepage/config.actual.py"
+    mode: "0644"
+
+- name: Start Docker container for homepage
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/homepage"
+    state: present
+  register: output
+
+- name: Show results
+  ansible.builtin.debug:
+    var: output
+  when: false

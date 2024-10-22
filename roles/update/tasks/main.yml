@@ -25,11 +25,6 @@
     volumes: true
     builder_cache: true
 
-- name: Output debug message for all containers that are getting pulled
-  ansible.builtin.debug:
-    msg: "Pulling {{ item }}..."
-  loop: "{{ update_docker_stacks }}"
-
 - name: Pull image for Etherpad
   community.docker.docker_compose_v2_pull:
     project_src: "{{ docker.base_dir }}/{{ item }}"

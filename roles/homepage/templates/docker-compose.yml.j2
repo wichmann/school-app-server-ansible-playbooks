@@ -1,0 +1,22 @@
+services:
+  evreg:
+    #build: {{ homepage_github_repo }}
+    image: {{ homepage_github_image }}
+    restart: always
+    volumes:
+      - ./config.actual.py:/app/config.py
+      - ./participants.db:/app/participants.db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.evreg.loadbalancer.server.port=5000"
+      - "traefik.http.routers.evreg.rule=Host(`${EVREG_DOMAIN}`)"
+      - "traefik.http.routers.evreg.tls=true"
+      - "traefik.http.routers.evreg.tls.certresolver=letsencrypt"
+    networks:
+      - homepage_net
+
+networks:
+  homepage_net:
+    # https://docs.docker.com/compose/networking/#use-a-pre-existing-network
+    name: infrastructure_default
+    external: true

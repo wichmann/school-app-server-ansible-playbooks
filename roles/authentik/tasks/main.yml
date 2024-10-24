@@ -22,12 +22,12 @@
     dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/logo.svg
     mode: "0644"
 
-- name: Copy background image for Authentik
-  become: true
-  ansible.builtin.copy:
-    src: files/background.jpeg
-    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/background.jpeg
-    mode: "0644"
+# - name: Copy background image for Authentik
+#  become: true
+#  ansible.builtin.copy:
+#    src: files/background.jpeg
+#    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/background.jpeg
+#    mode: "0644"
 
 - name: Start Docker container for Authentik
   community.docker.docker_compose_v2:

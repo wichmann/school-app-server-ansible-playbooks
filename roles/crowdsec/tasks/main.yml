@@ -29,6 +29,8 @@
 - name: Add Grafana Alloy config for scraping Prometheus metrics from Crowdsec
   ansible.builtin.blockinfile:
     path: "/etc/alloy/config.alloy"
+    # Change marker because # is NOT a comment in Alloy config
+    marker: "// {mark} ANSIBLE MANAGED BLOCK"
     block: |
       prometheus.scrape "crowdsec" {
         targets = [{

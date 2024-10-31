@@ -119,6 +119,14 @@ path_targets = [{
 }]
 }
 
+local.file_match "traefik_logs" {
+path_targets = [{
+    __address__ = "localhost",
+    __path__ = "/var/log/traefik/*.log",
+    instance    = "{{ hostname }}",
+}]
+}
+
 discovery.relabel "logs_integrations_integrations_node_exporter_journal_scrape" {
 targets = []
 
@@ -145,5 +153,10 @@ rule {
 
 loki.source.file "logs_integrations_integrations_node_exporter_direct_scrape" {
 targets    = local.file_match.logs_integrations_integrations_node_exporter_direct_scrape.targets
+forward_to = [loki.write.grafana_cloud_loki.receiver]
+}
+
+loki.source.file "traefik_logs" {
+targets    = local.file_match.traefik_logs.targets
 forward_to = [loki.write.grafana_cloud_loki.receiver]
 }

@@ -13,3 +13,9 @@
   ansible.builtin.service:
     name: alloy
     state: restarted
+
+- name: Add user Alloy to group "adm" to access log files
+  ansible.builtin.user:
+    name: alloy
+    groups: adm
+    append: true

@@ -14,7 +14,6 @@ system_basic_packages:
   - rsync
   - zip
   - unzip
-  - fail2ban
   - ufw
   - figlet
   - neofetch

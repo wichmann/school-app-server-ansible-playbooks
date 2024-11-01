@@ -1,6 +1,6 @@
 - name: Add SSH public key
   ansible.posix.authorized_key:
-    user: "{{ admin.name }}"
+    user: "{{ admin.username }}"
     key: "{{ admin.key }}"
 
 - name: Disable root SSH login

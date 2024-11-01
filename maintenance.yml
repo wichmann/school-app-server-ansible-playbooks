@@ -1,7 +1,7 @@
 - name: Do basic maintainance task, like update the server and backup all Docker volumes
   hosts: schoolservers
   become: true
-  remote_user: "{{ admin.name }}"
+  remote_user: "{{ admin.username }}"
   roles:
     - update
     - backup

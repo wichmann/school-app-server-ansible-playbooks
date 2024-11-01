@@ -2,7 +2,7 @@
   # Contains gitea, jenkins, ...
   hosts: schoolservers
   become: true
-  remote_user: "{{ admin.name }}"
+  remote_user: "{{ admin.username }}"
   tags: development
   roles:
     - gitea

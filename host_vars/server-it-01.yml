@@ -1,5 +1,5 @@
 admin:
-  name: wichmann
+  username: wichmann
   fullname: Christian Wichmann
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   email: "wichmann@bbs-os-brinkstr.de"

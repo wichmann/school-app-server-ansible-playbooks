@@ -1,5 +1,5 @@
 docker:
-  base_dir: "/opt/docker"
+  base_dir: "/opt/containers"
 
 backup:
   directory: "/backup"

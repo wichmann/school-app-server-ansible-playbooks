@@ -1,7 +1,7 @@
 # set all config options and predefined constants for evreg
 SECRET_KEY = '{{ services.homepage.evreg.secret_key }}'
-RECAPTCHA_PUBLIC_KEY = '{{ services.homepage.evreg.recaptcha_public }}'
-RECAPTCHA_PRIVATE_KEY = '{{ services.homepage.evreg.recaptcha_private }}'
+RECAPTCHA_PUBLIC_KEY = '{{ recaptcha.public }}'
+RECAPTCHA_PRIVATE_KEY = '{{ recaptcha.private }}'
 SQLALCHEMY_DATABASE_URI = '{{ services.homepage.evreg.database_uri }}'
 
 EMAIL_SENDER_NAME = '{{ services.homepage.email.sender_name }}'

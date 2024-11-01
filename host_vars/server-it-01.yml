@@ -1,9 +1,59 @@
+hostname: server-it-01.brinkstrasse.schule
+basedomain: brinkstrasse.schule
+
+locale: de_DE.UTF-8
+timezone: Europe/Berlin
+
+root:
+  username: root
+  password: 
+
 admin:
   username: wichmann
   fullname: Christian Wichmann
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   email: "wichmann@bbs-os-brinkstr.de"
-locale: de_DE.UTF-8
-timezone: Europe/Berlin
-hostname: server-it-01.brinkstrasse.schule
-basedomain: brinkstrasse.schule
+
+services:
+  traefik:
+    dashboard_user: "admin"
+    dashboard_password: ""
+  portainer:
+    admin_username: "admin" # not used in playbooks!
+    admin_password: ""
+  uptimekuma:
+    admin_username: "admin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+  authentik:
+    database_password: 
+    secret_key: 
+    token: 
+    admin_username: "akadmin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+  gitea:
+    admin_username: "admin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+  jenkins:
+    admin_username: "admin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+  kanboard:
+    admin_username: "admin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+  onlyoffice:
+    secret_token: 
+  homepage:
+    domain: ei.brinkstr.de
+    evreg:
+      secret_key: 
+      database_uri: "sqlite:///participants.db"
+      list_password: 
+      enlist_open: "False"
+    email:
+      sender_name: 
+      sender_user: 
+      sender_domain: 
+      subject: 
+      host: 
+      port: 465
+      user: 
+      password: 

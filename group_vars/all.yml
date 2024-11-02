@@ -4,32 +4,20 @@ docker:
 backup:
   directory: "/backup"
 
-services:
-  traefik:
-    subdomain: dashboard
-    metrics_domain: metrics
-  portainer:
-    subdomain: portainer
-  uptimekuma:
-    subdomain: status
-  authentik:
-    subdomain: auth
-  gitea:
-    subdomain: git
-  jenkins:
-    subdomain: jenkins
-  kanboard:
-    subdomain: kanboard
-  etherpad:
-    subdomain: pad
-  hedgedoc:
-    subdomain: md
-  hesk:
-    subdomain: hesk
-  onlyoffice:
-    subdomain: onlyoffice
-  homepage:
-    subdomain: ei
+subdomains:
+  traefik: dashboard
+  traefik_metrics: metrics
+  portainer: portainer
+  uptimekuma: status
+  authentik: auth
+  gitea: git
+  jenkins: jenkins
+  kanboard: kanboard
+  etherpad: pad
+  hedgedoc: md
+  hesk: hesk
+  onlyoffice: onlyoffice
+  homepage: ei
 
 monitoring:
   metrics:

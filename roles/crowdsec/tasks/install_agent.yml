@@ -18,6 +18,10 @@
     state: present
     update_cache: true
 
+- name: Update collections from Crowdsec hub
+  ansible.builtin.command: "cscli hub update"
+  changed_when: true # execute command on each run of the playbook
+
 - name: Install plugin to enrich data with geo information about IP addresses
   ansible.builtin.command: "cscli parsers install crowdsecurity/geoip-enrich"
   changed_when: true # execute command on each run of the playbook

@@ -6,6 +6,12 @@
     dest: "{{ docker.base_dir }}/identity-provider/.env"
     mode: "0644"
 
+- name: Start Docker container for Authentik
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/identity-provider"
+    state: present
+  register: output
+
 - name: Copy favicon image into Authentik media volume
   # TODO: Find a better way to provide files for Authentik (directory as volume, docker cp, ...)
   # Branding Authentik: https://www.youtube.com/watch?v=b7yAYUfUNpY
@@ -28,9 +34,3 @@
 #    src: files/background.jpeg
 #    dest: /var/lib/docker/volumes/identity-provider_authentik_media/_data/background.jpeg
 #    mode: "0644"
-
-- name: Start Docker container for Authentik
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker.base_dir }}/identity-provider"
-    state: present
-  register: output

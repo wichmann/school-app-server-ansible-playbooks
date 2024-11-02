@@ -12,7 +12,7 @@
     state: present
     validate: /usr/sbin/sshd -T -f %s
   notify:
-    - restart sshd
+    - Restart sshd
 
 - name: Only allow SSH key authentication
   become: true
@@ -23,7 +23,7 @@
     state: present
     validate: /usr/sbin/sshd -T -f %s
   notify:
-    - restart sshd
+    - Restart sshd
 
 - name: Disable SSH password authentication
   become: true
@@ -34,4 +34,4 @@
     state: present
     validate: /usr/sbin/sshd -T -f %s
   notify:
-    - restart sshd
+    - Restart sshd

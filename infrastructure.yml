@@ -12,7 +12,7 @@
       tags: security
     - role: monitoring
       tags: monitoring
-    - role: crowdsec
-      tags: security
     - role: authentik
+      tags: security
+    - role: crowdsec
       tags: security

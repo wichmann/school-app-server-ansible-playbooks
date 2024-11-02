@@ -14,7 +14,7 @@
     name: alloy
     state: restarted
 
-- name: Add user Alloy to group "adm" to access log files
+- name: Add user "alloy" to group "adm" to access log files
   ansible.builtin.user:
     name: alloy
     groups: adm

@@ -16,7 +16,7 @@ admin:
 
 services:
   traefik:
-    dashboard_user: "admin"
+    dashboard_user: admin
     dashboard_password: ""
   portainer:
     admin_username: "admin" # not used in playbooks!

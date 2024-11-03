@@ -25,12 +25,12 @@
     volumes: true
     builder_cache: true
 
-- name: Pull image for Etherpad
+- name: Pull image for all Docker stacks
   community.docker.docker_compose_v2_pull:
     project_src: "{{ docker.base_dir }}/{{ item }}"
   loop: "{{ update_docker_stacks }}"
 
-- name: Start Docker container for Etherpad
+- name: Start Docker container for all Docker stacks
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/{{ item }}"
     state: present

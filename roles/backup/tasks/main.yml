@@ -28,3 +28,24 @@
     cmd: "docker run --rm -v {{ item }}:/data:ro -v {{ backup.directory }}:/backup busybox tar -czvf /backup/{{ item }}_{{ ansible_date_time.date }}.tar.gz /data"
   changed_when: true
   loop: "{{ backup_volumes }}"
+
+- name: Create directory for scripts
+  ansible.builtin.file:
+    path: "{{ scripts.base_dir }}"
+    state: directory
+    mode: "0644"
+
+- name: Copy template for backup script to remote host
+  ansible.builtin.template:
+    src: backup.sh.j2
+    dest: "{{ scripts.base_dir }}/backup.sh"
+    mode: "0755"
+
+- name: Create cron job for backup script
+  ansible.builtin.cron:
+    name: "Backup all Docker volumes"
+    minute: "0"
+    hour: "3"
+    weekday: "1,3,5"
+    job: "{{ scripts.base_dir }}/backup.sh"
+    state: present

@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Backup all Docker conntainer
+# Author: Christian Wichmann
+# Date: 2024-11-03
+
+# Check if user is root (https://stackoverflow.com/a/18216122/18073555)
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
+BACKUP_DIR="{{ backup.directory }}"
+REMOTE_HOST=""
+DATE=`date +%Y%m%d`
+
+# create backup directory
+mkdir -p $BACKUP_DIR
+
+# delete all backup files and directories older that 10 days
+find $BACKUP_DIR -mindepth 1 -mtime +10 -delete
+
+create_archive () {
+    docker run --rm -v ${1}:/data:ro -v ${BACKUP_DIR}:/backup busybox tar -czvf /backup/${1}_$DATE.tar.gz /data
+}
+
+volumes=(
+    infrastructure_portainer_data
+    infrastructure_uptime_kuma
+    identity-provider_authentik_database
+    identity-provider_authentik_media
+    identity-provider_authentik_redis
+    identity-provider_authentik_templates
+    etherpad_etherpad_data
+    etherpad_etherpad_db_data
+    hedgedoc_hedgedoc_db_data
+    hedgedoc_hedgedoc_uploads
+    onlyoffice_onlyoffice_data
+    onlyoffice_onlyoffice_db
+    onlyoffice_onlyoffice_lib
+    onlyoffice_onlyoffice_logs
+    kanboard_kanboard_data
+    kanboard_kanboard_plugins
+    kanboard_kanboard_ssl
+)
+
+for i in "${volumes[@]}"; do
+    create_archive "$i"
+    #copy_archive "$i"
+done
+
+# Copy configuration files manually to backup directory
+files=(
+    /etc/hosts
+    /etc/alloy/config.alloy
+)
+
+# copy configuration files into backup dir
+for i in "${files[@]}"; do
+    cp $i $BACKUP_DIR
+done

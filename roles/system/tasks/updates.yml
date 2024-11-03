@@ -19,5 +19,5 @@
   become: true
   ansible.builtin.copy:
     src: files/update.sh
-    dest: /root/update.sh
+    dest:  "{{ scripts.base_dir }}/update.sh"
     mode: "0644"

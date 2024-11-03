@@ -1,6 +1,9 @@
 docker:
   base_dir: "/opt/containers"
 
+scripts:
+  base_dir: "/opt/maintenance"
+
 backup:
   directory: "/backup"
 

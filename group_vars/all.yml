@@ -3,9 +3,8 @@ docker:
 
 scripts:
   base_dir: "/opt/maintenance"
-
-backup:
-  directory: "/backup"
+  backup:
+    directory: "/backup"
 
 subdomains:
   traefik: dashboard

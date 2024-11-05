@@ -10,7 +10,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-BACKUP_DIR="{{ backup.directory }}"
+BACKUP_DIR="{{ scripts.backup.directory }}"
 REMOTE_HOST=""
 DATE=`date +%Y%m%d`
 

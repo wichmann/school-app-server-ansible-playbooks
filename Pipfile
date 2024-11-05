@@ -9,6 +9,7 @@ ansible = "*"
 authentik-client = "*"
 pyyaml = "*"
 requests = "*"
+fire = "*"
 
 [dev-packages]
 

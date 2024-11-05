@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d0d8a71451a73577e474186e6aaea51272f961160c3679fdd487ee97def4c343"
+            "sha256": "c294a5374accc9fb738d560d41c06fad84d658152a77d8cfeb941aed73be834c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -35,20 +35,20 @@
         },
         "ansible-core": {
             "hashes": [
-                "sha256:10f165b475cf2bc8d886e532cadb32c52ee6a533649793101d3166bca9bd3ea3",
-                "sha256:ae7f51fd13dc9d57c9bcd43ef23f9c255ca8f18f4b5c0011a4f9b724d92c5a8e"
+                "sha256:3e53970b7cebfe2adb39b711c1e2f8bbfcbedac828da51dc0357a19070638e95",
+                "sha256:dab09cd49fe7e17003e13188ce1ab52a0a6e5b88bc4bf29ff101cfdcb2862395"
             ],
             "markers": "python_version >= '3.10'",
-            "version": "==2.17.5"
+            "version": "==2.17.6"
         },
         "authentik-client": {
             "hashes": [
-                "sha256:9e450920e988672cc8e8aa0c1450cb55d3bf6b1c5b329806129be95057a271ed",
-                "sha256:d3d09a994d3be26455f8d4e73dc9f08613ecae109b635b0becfad40724329fec"
+                "sha256:37d75224af0e9ed542441f6cc89be333c4b13cdfceefaa82ad6a08c5e8816425",
+                "sha256:c6a8ae8f30c42b39803ebff57f0fdb7368abdca707453c188d6c0526021b61e6"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.7' and python_version < '4.0'",
-            "version": "==2024.8.3.post1729167051"
+            "version": "==2024.10.0.post1730745273"
         },
         "certifi": {
             "hashes": [
@@ -274,6 +274,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==43.0.3"
+        },
+        "fire": {
+            "hashes": [
+                "sha256:961550f07936eaf65ad1dc8360f2b2bf8408fad46abbfa4d2a3794f8d2a95cdf"
+            ],
+            "index": "pypi",
+            "version": "==0.7.0"
         },
         "idna": {
             "hashes": [
@@ -576,6 +583,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
+        },
+        "termcolor": {
+            "hashes": [
+                "sha256:37b17b5fc1e604945c2642c872a3764b5d547a48009871aea3edd3afa180afb8",
+                "sha256:998d8d27da6d48442e8e1f016119076b690d962507531df4890fcd2db2ef8a6f"
+            ],
+            "markers": "python_version >= '3.9'",
+            "version": "==2.5.0"
         },
         "typing-extensions": {
             "hashes": [

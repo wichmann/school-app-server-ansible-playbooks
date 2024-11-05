@@ -5,7 +5,11 @@
   remote_user: "{{ admin.username }}"
   tags: development
   roles:
-    - gitea
-    - jenkins
-    - kanboard
-    - hesk
+    - role: gitea
+      tags: programming
+    - role: jenkins
+      tags: programming
+    - role: kanboard
+      tags: projectmanagement
+    - role: hesk
+      tags: projectmanagement

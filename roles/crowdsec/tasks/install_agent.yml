@@ -12,6 +12,10 @@
     filename: crowdsec
     update_cache: true
 
+- name: Refresh apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
 - name: Install crowdsec
   ansible.builtin.apt:
     name: crowdsec

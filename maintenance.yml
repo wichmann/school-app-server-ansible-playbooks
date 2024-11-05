@@ -3,5 +3,8 @@
   become: true
   remote_user: "{{ admin.username }}"
   roles:
-    - update
-    - backup
+    - role: update
+      tags: update
+    - role: backup
+      tags: backup
+ 

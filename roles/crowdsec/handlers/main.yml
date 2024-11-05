@@ -1,4 +1,8 @@
 - name: Reload crowdsec
+  # Sometimes the restart of the Crowdsec service fails, because the installed
+  # version is not the latest from the Crowdsec repository. As a workaround,
+  # you can manually update and upgrade apt to ensure the latest version is
+  # installed!
   ansible.builtin.service:
     name: crowdsec
     state: reloaded

@@ -1,3 +1,21 @@
+- name: Create RSA host key for Jenkins agent
+  community.crypto.openssh_keypair:
+    type: rsa
+    path: "{{ docker.base_dir }}/jenkins/ssh_key_jenkins_agent"
+
+- name: Slurp remotely created public key into base64 encoded variable
+  ansible.builtin.slurp:
+    src: "{{ docker.base_dir }}/jenkins/ssh_key_jenkins_agent.pub"
+  register: public_key
+
+- name: Decode remote file content into variable for use in template
+  ansible.builtin.set_fact:
+    jenkins_agent_ssh_pubkey: "{{ public_key['content'] | b64decode }}"
+
+- name: Print information for user, where to find the private key
+  ansible.builtin.debug:
+    msg: "Private key for Jenkins agent can be found at {{ docker.base_dir }}/jenkins/ssh_key_jenkins_agent"
+
 - name: Create Jenkins configuration file
   become: true
   ansible.builtin.template:

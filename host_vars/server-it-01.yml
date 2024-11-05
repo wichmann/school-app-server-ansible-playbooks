@@ -21,6 +21,8 @@ services:
   portainer:
     admin_username: "admin" # not used in playbooks!
     admin_password: ""
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
   uptimekuma:
     admin_username: "admin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
@@ -30,8 +32,13 @@ services:
     token: 
     admin_username: "akadmin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
+    admin_email: ""
+  hedgedoc:
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
+    oauth2_domain: "{{ subdomains.authentik }}.{{ basedomain }}"
   gitea:
-    admin_username: "admin" # not used in playbooks!
+    admin_username: "gitea-admin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
   jenkins:
     admin_username: "admin" # not used in playbooks!
@@ -49,10 +56,10 @@ services:
       list_password: 
       enlist_open: "False"
     email:
-      sender_name: 
-      sender_user: 
-      sender_domain: 
-      subject: 
+      sender_name: Excellence Initiative der BBS Brinkstraße
+      sender_user: ei
+      sender_domain: bbs-os-brinkstr.de
+      subject: Anmeldung zur Excellence Initiative 2025
       host: 
       port: 465
       user: 

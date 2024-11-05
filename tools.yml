@@ -5,7 +5,11 @@
   remote_user: "{{ admin.username }}"
   tags: tools
   roles:
-    - etherpad
-    - hedgedoc
-    - onlyoffice
-    - homepage
+    - role: etherpad
+      tags: editors
+    - role: hedgedoc
+      tags: editors
+    - role: onlyoffice
+      tags: misc
+    - role: homepage
+      tags: misc

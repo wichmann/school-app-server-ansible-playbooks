@@ -90,20 +90,37 @@ netdev {
 }
 }
 
+// Collect metrics from node_exporter
 prometheus.scrape "integrations_node_exporter" {
 targets    = discovery.relabel.integrations_node_exporter.output
 forward_to = [prometheus.relabel.integrations_node_exporter.receiver]
 }
 
 prometheus.relabel "integrations_node_exporter" {
-forward_to = [prometheus.remote_write.metrics_service.receiver]
+    forward_to = [prometheus.remote_write.metrics_service.receiver]
 
-rule {
-    source_labels = ["__name__"]
-    regex         = "node_scrape_collector_.+"
-    action        = "drop"
+    rule {
+        source_labels = ["__name__"]
+        regex         = "node_scrape_collector_.+"
+        action        = "drop"
+    }
 }
+
+// collect Traefik metrics from external endpoint
+prometheus.scrape "traefik_metrics" {
+    targets = [
+        {"__address__" = "{{ subdomains.traefik_metrics }}.{{ basedomain }}"},
+    ]
+    metrics_path    = "/metrics"
+    
+    basic_auth {
+        username = "{{ services.traefik.dashboard_user }}"
+        password = "{{ services.traefik.dashboard_password }}"
+    }
+    forward_to = [prometheus.remote_write.metrics_service.receiver]
 }
+
+// Collect logs from node_exporter
 loki.source.journal "logs_integrations_integrations_node_exporter_journal_scrape" {
 max_age       = "24h0m0s"
 relabel_rules = discovery.relabel.logs_integrations_integrations_node_exporter_journal_scrape.rules
@@ -116,14 +133,6 @@ path_targets = [{
     __path__    = "/var/log/{syslog,messages,*.log}",
     instance    = "{{ hostname }}",
     job         = "integrations/node_exporter",
-}]
-}
-
-local.file_match "traefik_logs" {
-path_targets = [{
-    __address__ = "localhost",
-    __path__ = "/var/log/traefik/*.log",
-    instance    = "{{ hostname }}",
 }]
 }
 
@@ -154,6 +163,16 @@ rule {
 loki.source.file "logs_integrations_integrations_node_exporter_direct_scrape" {
 targets    = local.file_match.logs_integrations_integrations_node_exporter_direct_scrape.targets
 forward_to = [loki.write.grafana_cloud_loki.receiver]
+}
+
+
+// Collect logs from Traefik
+local.file_match "traefik_logs" {
+path_targets = [{
+    __address__ = "localhost",
+    __path__ = "/var/log/traefik/*.log",
+    instance    = "{{ hostname }}",
+}]
 }
 
 loki.source.file "traefik_logs" {

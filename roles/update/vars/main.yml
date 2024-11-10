@@ -7,3 +7,4 @@ update_docker_stacks:
   - jenkins
   - kanboard
   - onlyoffice
+  - homepage

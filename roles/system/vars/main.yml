@@ -22,7 +22,6 @@ system_basic_packages:
   - ncdu
   - update-notifier-common
   - unattended-upgrades
-  - crowdsec
   - gnupg
   - apt-transport-https
   - ripgrep

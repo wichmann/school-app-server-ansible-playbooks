@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Manual update of all packages and Docker container
+# Author: Christian Wichmann
+# Date: 2024-11-10
+
+# Check if user is root (https://stackoverflow.com/a/18216122/18073555)
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
+echo
+echo "*** Update all packages and Docker container manually... ***"
+echo
+
+apt update
+apt full-upgrade -y
+
+docker compose -f {{ docker.base_dir }}/infrastructure/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/infrastructure/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/identity-provider/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/identity-provider/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/kanboard/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/kanboard/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/jenkins/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/jenkins/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/gitea/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/gitea/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/etherpad/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/etherpad/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/hedgedoc/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/hedgedoc/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/onlyoffice/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/onlyoffice/docker-compose.yml up -d
+
+docker compose -f {{ docker.base_dir }}/homepage/docker-compose.yml pull
+docker compose -f {{ docker.base_dir }}/homepage/docker-compose.yml up -d
+
+#docker image prune -a -f

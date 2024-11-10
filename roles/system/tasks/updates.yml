@@ -23,7 +23,7 @@
 
 - name: Copy script to update manually
   become: true
-  ansible.builtin.copy:
-    src: files/update.sh
+  ansible.builtin.template:
+    src: update.sh.j2
     dest: "{{ scripts.base_dir }}/update.sh"
     mode: "0755"

@@ -5,6 +5,10 @@ scripts:
   base_dir: "/opt/maintenance"
   backup:
     directory: "/backup"
+    webdav:
+      url: ""
+      user: "backup"
+      password: "backup"
 
 subdomains:
   traefik: dashboard

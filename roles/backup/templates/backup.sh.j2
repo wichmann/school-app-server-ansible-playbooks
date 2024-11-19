@@ -2,7 +2,7 @@
 
 # Backup all Docker conntainer
 # Author: Christian Wichmann
-# Date: 2024-11-05
+# Date: 2024-11-19
 
 # Check if user is root (https://stackoverflow.com/a/18216122/18073555)
 if [ "$EUID" -ne 0 ]
@@ -11,17 +11,22 @@ if [ "$EUID" -ne 0 ]
 fi
 
 BACKUP_DIR="{{ scripts.backup.directory }}"
-REMOTE_HOST=""
-DATE=`date +%Y%m%d`
+DATE=$(date +%Y%m%d)
 
 # create backup directory
-mkdir -p $BACKUP_DIR
+mkdir -p "$BACKUP_DIR"
 
 # delete all backup files and directories older that 10 days
-find $BACKUP_DIR -mindepth 1 -mtime +10 -delete
+find "$BACKUP_DIR" -mindepth 1 -mtime +10 -delete
 
 create_archive () {
-    docker run --rm -v ${1}:/data:ro -v ${BACKUP_DIR}:/backup busybox tar -czvf /backup/${1}_$DATE.tar.gz /data
+    docker run --rm -v "${1}":/data:ro -v "${BACKUP_DIR}":/backup busybox tar -czvf /backup/"${1}"_"$DATE".tar.gz /data
+}
+
+copy_archive () {
+    # copy archive to remote host via WebDAV
+    # source: https://docs.nextcloud.com/server/18/user_manual/files/access_webdav.html#accessing-files-using-curl
+    curl -u "{{ scripts.backup.webdav.user }}:{{ scripts.backup.webdav.password }}" -T "${1}" "{{ scripts.backup.webdav.url }}"
 }
 
 volumes=(
@@ -49,7 +54,7 @@ volumes=(
 
 for i in "${volumes[@]}"; do
     create_archive "$i"
-    #copy_archive "$i"
+    copy_archive "$i"
 done
 
 # Copy configuration files manually to backup directory
@@ -60,5 +65,5 @@ files=(
 
 # copy configuration files into backup dir
 for i in "${files[@]}"; do
-    cp $i $BACKUP_DIR
+    cp "$i" "$BACKUP_DIR"
 done

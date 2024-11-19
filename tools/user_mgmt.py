@@ -37,8 +37,8 @@ log_to_screen.setLevel(logging.INFO)
 logger.addHandler(log_to_screen)
 
 
-def import_user_list_csv():
-    with open('user_list.csv', newline='') as f:
+def import_user_list_csv(filename: str = 'user_list.csv'):
+    with open(filename, newline='') as f:
         reader = csv.reader(f)
         result = [list((e.strip() for e in row)) for row in reader]
     return result
@@ -149,7 +149,7 @@ class UserManagement:
         except ApiException as e:
             print('Exception while adding user to group: %s\n' % e)
 
-    def import_user(self, filename: str):
+    def import_users(self, filename: str):
         """
         Import a list of users from a CSV file. The file must have the following
         columns: 'firstname', 'surname', 'email', 'username', 'password', 'group'.

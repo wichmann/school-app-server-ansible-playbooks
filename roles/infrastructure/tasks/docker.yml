@@ -2,7 +2,7 @@
   ansible.builtin.replace:
     path: "{{ docker.base_dir }}/infrastructure/traefik.yml"
     regexp: '(\s+)mail@example.com(\s+.*)?$'
-    replace: '\1wichmann@bbs-brinkstrasse.de\2'
+    replace: '\1{{ admin.email }}\2'
 
 - name: Create Traefik configuration file
   become: true

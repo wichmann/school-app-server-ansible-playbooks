@@ -8,3 +8,16 @@ update_docker_stacks:
   - kanboard
   - onlyoffice
   - homepage
+update_image_versions:
+  - dir: identity-provider
+    container: authentik
+    image: ghcr.io/goauthentik/server
+    tag: 2025.4
+  - dir: infrastructure
+    container: traefik
+    image: traefik
+    tag: v3.3
+  - dir: infrastructure
+    container: portainer
+    image: portainer/portainer-ce
+    tag: latest

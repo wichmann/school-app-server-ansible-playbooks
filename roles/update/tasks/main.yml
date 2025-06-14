@@ -25,6 +25,13 @@
     volumes: true
     builder_cache: true
 
+- name: Bump image versions for Docker stacks from var
+  ansible.builtin.lineinfile:
+    path: "{{ docker.base_dir }}/{{ item.dir }}/.env"
+    regexp: "^{{ item.container | upper }}_IMAGE="
+    line: "{{ item.container | upper }}_IMAGE={{ item.image }}:{{ item.tag }}"
+  loop: "{{ update_image_versions }}"
+
 - name: Pull image for all Docker stacks
   community.docker.docker_compose_v2_pull:
     project_src: "{{ docker.base_dir }}/{{ item }}"

@@ -31,3 +31,34 @@
           docker kill --signal="USR1" infrastructure-reverse-proxy-1
         endscript
       }
+
+- name: Add redirects for external domains to Traefik configuration
+  ansible.builtin.blockinfile:
+    path: "{{ docker.base_dir }}/infrastructure/dynamic_conf.yml"
+    block: |
+      ################################################################
+      # Adds redirects for external domains to Traefik
+      ################################################################
+      #http:
+      #  middlewares:
+          redirect-to-nextcloud:
+            redirectRegex:
+              regex: "^https?://nextcloud.brinkstr.de/(.*)"
+              replacement: "https://nextcloud-g2.osnabrueck-bbs-brinkstr.logoip.de/$1"
+              permanent: true
+        routers:
+          nextcloud-redirect-router:
+            rule: "Host(`nextcloud.brinkstr.de`)"
+            tls:
+              certResolver: letsencrypt
+            entryPoints:
+              - websecure
+            middlewares:
+              - redirect-to-nextcloud
+            service: nextcloud-redirect-service@file
+        services:
+          nextcloud-redirect-service:
+            loadBalancer:
+              servers:
+                - url: http://127.0.0.1:80
+

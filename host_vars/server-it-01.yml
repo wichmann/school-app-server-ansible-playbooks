@@ -12,7 +12,7 @@ admin:
   username: wichmann
   fullname: Christian Wichmann
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-  email: "wichmann@bbs-os-brinkstr.de"
+  email: "wichmann@bbs-brinkstrasse.de"
 
 services:
   traefik:

@@ -45,5 +45,6 @@ telegram:
   token:
 
 recaptcha:
-  public:
-  private:
+
+hetzner:
+  api_key: ""

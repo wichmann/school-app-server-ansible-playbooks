@@ -62,3 +62,39 @@
               servers:
                 - url: http://127.0.0.1:80
 
+- name: Insert Hetzner API key as environment variable
+  ansible.builtin.lineinfile:
+    path: "{{ docker.base_dir }}/infrastructure/.env"
+    line: "TRAEFIK_HETZNER_API_KEY={{ hetzner.api_key }}"
+
+- name: Add env variable to Traefik Docker container
+  ansible.builtin.blockinfile:
+    path: "{{ docker.base_dir }}/infrastructure/docker-compose.yml"
+    marker: "# {mark} ANSIBLE MANAGED HETZNER"
+    insertafter: "      - traefik_dashboard_auth"
+    block: |
+      {% filter indent(width=4, first=true) %}
+      environment:
+        - HETZNER_API_KEY=$TRAEFIK_HETZNER_API_KEY
+      {% endfilter %}
+
+- name: Add certificate resolver (Hetzner) in main Traefik configuration file
+  ansible.builtin.blockinfile:
+    path: "{{ docker.base_dir }}/infrastructure/traefik.yml"
+    marker: "# {mark} ANSIBLE MANAGED HETZNER"
+    insertafter: '^certificatesResolvers:'
+    block: |
+      {% filter indent(width=2, first=true) %}
+      hetzner:
+        acme:
+          email: {{ admin.email }}
+          storage: /etc/traefik/acme.json
+          dnsChallenge:
+            provider: hetzner
+      {% endfilter %}
+
+- name: Restart Docker container for Traefik
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/infrastructure"
+    state: present
+  register: output

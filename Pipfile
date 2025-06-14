@@ -7,11 +7,11 @@ name = "pypi"
 passlib = "*"
 ansible = "*"
 authentik-client = "*"
-pyyaml = "*"
 requests = "*"
 fire = "*"
+pyyaml = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.13"

@@ -5,5 +5,3 @@
   roles:
     - role: update
       tags: update
-    - role: backup
-      tags: backup

@@ -36,9 +36,7 @@ monitoring:
     password:
 
 mail:
-  smtp_addr:
-  smtp_user:
-  smtp_password:
+  smtp_port: 465
 
 telegram:
   chatid:

@@ -62,5 +62,6 @@ services:
       subject: Anmeldung zur Excellence Initiative 2025
       host: 
       port: 465
-      user: 
-      password: 
+  stalwart:
+    admin_username: admin
+    admin_password: 

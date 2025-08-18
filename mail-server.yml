@@ -1,0 +1,8 @@
+- name: Install and configure a mail server
+  hosts: schoolservers
+  become: true
+  remote_user: "{{ admin.username }}"
+  tags: tools
+  roles:
+    - role: stalwart
+      tags: mail

@@ -1,0 +1,46 @@
+- name: Create Stalwart environment configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/stalwart/.env"
+    mode: "0644"
+
+- name: Generate HTTP basic auth credentials for Stalwart admin
+  community.general.htpasswd:
+    path: "{{ docker.base_dir }}/stalwart/htpasswd.tmp"
+    name: "{{ services.stalwart.admin_username }}"
+    password: "{{ services.stalwart.admin_password }}"
+    # explicitly use secure hash "bcrypt" instead of "md5"
+    # https://passlib.readthedocs.io/en/stable/lib/passlib.apache.html#passlib.apache.HtpasswdFile
+    hash_scheme: bcrypt
+    mode: "0644"
+
+- name: Read generated password hash from file
+  ansible.builtin.slurp:
+    src: "{{ docker.base_dir }}/stalwart/htpasswd.tmp"
+  register: stalwart_htpasswd_result
+
+- name: Put generated password hash into variable
+  ansible.builtin.set_fact:
+    stalwart_admin_password_hash: "{{ stalwart_htpasswd_result['content'] | b64decode | split(':') | last | trim }}"
+
+- name: Save template for Stalwart configuration file
+  become: true
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ docker.base_dir }}/stalwart/config.toml"
+    mode: "0644"
+
+- name: Mount created configuration file in Docker Compose stack for Stalwart
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ docker.base_dir }}/stalwart/docker-compose.yml"
+    regexp: '^      #- ./config.toml:/opt/stalwart/etc/config.toml$'
+    line: '      - ./config.toml:/opt/stalwart/etc/config.toml'
+    state: present
+
+- name: Start Docker container for Stalwart mail server
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/stalwart"
+    state: present
+  register: stalwart_output

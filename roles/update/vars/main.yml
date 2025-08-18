@@ -16,7 +16,7 @@ update_image_versions:
   - dir: infrastructure
     container: traefik
     image: traefik
-    tag: v3.3
+    tag: v3.4
   - dir: infrastructure
     container: portainer
     image: portainer/portainer-ce
@@ -24,7 +24,7 @@ update_image_versions:
   - dir: kanboard
     container: kanboard
     image: kanboard/kanboard
-    tag: v1.2.46
+    tag: v1.2.47
   - dir: etherpad
     container: etherpad
     image: etherpad/etherpad
@@ -32,4 +32,4 @@ update_image_versions:
   - dir: stalwart
     container: mailserver
     image: stalwartlabs/stalwart
-    tag: v0.12
+    tag: v0.13

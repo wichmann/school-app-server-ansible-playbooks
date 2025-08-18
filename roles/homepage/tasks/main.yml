@@ -29,9 +29,9 @@
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/homepage"
     state: present
-  register: output
+  register: homepage_output
 
 - name: Show results
   ansible.builtin.debug:
-    var: output
+    var: homepage_output
   when: false

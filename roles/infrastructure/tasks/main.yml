@@ -97,4 +97,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/infrastructure"
     state: present
-  register: output
+  register: infrastructure_output

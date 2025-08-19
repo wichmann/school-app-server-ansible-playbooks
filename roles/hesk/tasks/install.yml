@@ -21,7 +21,7 @@
 
 - name: Print message for user to download Hesk
   ansible.builtin.debug:
-    msg: Please download Hesk from https://hesk.com/download.php.
+    msg: Please download the newest version of Hesk Free from https://hesk.com/download.php.
 
 - name: Unzip Hesk source
   ansible.builtin.unarchive:
@@ -51,8 +51,22 @@
     state: present
   register: output
 
+- name: Read generated database password from file
+  ansible.builtin.slurp:
+    src: "{{ hesk_instance_base_dir }}/hesk_db_password.txt"
+  register: hesk_database_password_file
+
+- name: Put generated password into variable
+  ansible.builtin.set_fact:
+    hesk_database_password: "{{ hesk_database_password_file['content'] | b64decode | split(':') | last | trim }}"
+
 - name: Print message for user to open Hesk in browser
   ansible.builtin.debug:
     msg: >
       "Please open the URL https://{{ hesk_instance_subdomain }}.{{ basedomain }}/install in your web browser."
-      "After that execute the command: rm -rf /opt/docker/hesk/html/install/ on the server."
+      "For the installation you need the following informations:"
+      "Database Host: {{ hesk_instance_subdomain }}-hesk-db-1"
+      "Database User (login):	hesk"
+      "User Passwort: {{ hesk_database_password }}"
+      "Then fill in the admin details and password."
+      "After that execute the command: rm -rf {{ hesk_instance_base_dir }}/html/install/ on the server."

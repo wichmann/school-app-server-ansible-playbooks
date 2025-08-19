@@ -24,6 +24,7 @@ subdomains:
   hesk: hesk
   onlyoffice: onlyoffice
   homepage: ei
+  stalwart: mail
 
 monitoring:
   metrics:

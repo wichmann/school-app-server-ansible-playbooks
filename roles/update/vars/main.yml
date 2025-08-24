@@ -12,11 +12,11 @@ update_image_versions:
   - dir: identity-provider
     container: authentik
     image: ghcr.io/goauthentik/server
-    tag: 2025.6
+    tag: "{{ versions.authentik }}"
   - dir: infrastructure
     container: traefik
     image: traefik
-    tag: v3.4
+    tag: "{{ versions.traefik }}"
   - dir: infrastructure
     container: portainer
     image: portainer/portainer-ce
@@ -24,12 +24,12 @@ update_image_versions:
   - dir: kanboard
     container: kanboard
     image: kanboard/kanboard
-    tag: v1.2.47
+    tag: "{{ versions.kanboard }}"
   - dir: etherpad
     container: etherpad
     image: etherpad/etherpad
-    tag: 1.9
+    tag: "{{ versions.etherpad }}"
   - dir: stalwart
     container: mailserver
     image: stalwartlabs/stalwart
-    tag: v0.13
+    tag: "{{ versions.stalwart }}"

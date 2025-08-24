@@ -26,6 +26,13 @@ subdomains:
   homepage: ei
   stalwart: mail
 
+versions:
+  kanboard: v1.2.47
+  traefik: v3.4
+  authentik: 2025.8
+  etherpad: 1.9
+  stalwart: v0.13
+
 monitoring:
   metrics:
     url: "https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push"

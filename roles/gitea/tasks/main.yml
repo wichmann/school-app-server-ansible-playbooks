@@ -31,4 +31,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/gitea"
     state: present
-  register: output
+  register: gitea_output

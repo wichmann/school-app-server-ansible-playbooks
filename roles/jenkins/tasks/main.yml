@@ -6,11 +6,11 @@
 - name: Slurp remotely created public key into base64 encoded variable
   ansible.builtin.slurp:
     src: "{{ docker.base_dir }}/jenkins/ssh_key_jenkins_agent.pub"
-  register: public_key
+  register: jenkins_public_key
 
 - name: Decode remote file content into variable for use in template
   ansible.builtin.set_fact:
-    jenkins_agent_ssh_pubkey: "{{ public_key['content'] | b64decode }}"
+    jenkins_agent_ssh_pubkey: "{{ jenkins_public_key['content'] | b64decode }}"
 
 - name: Print information for user, where to find the private key
   ansible.builtin.debug:
@@ -27,4 +27,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/jenkins"
     state: present
-  register: output
+  register: jenkins_output

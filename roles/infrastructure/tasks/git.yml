@@ -1,7 +1,7 @@
 - name: Check if acme.json already exists (important for first run!)
   ansible.builtin.stat:
     path: "{{ docker.base_dir }}/infrastructure/acme.json"
-  register: certfile
+  register: infrastructure_certfile
 
 - name: Backup acme.json file to /tmp
   ansible.builtin.copy:
@@ -9,7 +9,7 @@
     dest: "/tmp/acme.json"
     remote_src: true
     mode: '0600'
-  when: certfile.stat.exists
+  when: infrastructure_certfile.stat.exists
 
 - name: Git checkout
   become: true
@@ -33,4 +33,4 @@
     remote_src: true
     dest: "{{ docker.base_dir }}/infrastructure/acme.json"
     mode: '0600'
-  when: certfile.stat.exists
+  when: infrastructure_certfile.stat.exists

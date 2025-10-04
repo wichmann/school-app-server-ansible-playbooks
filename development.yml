@@ -7,9 +7,11 @@
   roles:
     - role: gitea
       tags: programming
+    - role: forgejo
+      tags: programming
     - role: jenkins
       tags: programming
     - role: kanboard
       tags: projectmanagement
-    - role: hesk
-      tags: projectmanagement
+    # - role: hesk
+    #  tags: projectmanagement

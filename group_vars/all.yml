@@ -25,13 +25,15 @@ subdomains:
   onlyoffice: onlyoffice
   homepage: ei
   stalwart: mail
+  forgejo: forgejo
 
 versions:
   kanboard: v1.2.47
-  traefik: v3.4
+  traefik: v3.5
   authentik: 2025.8
   etherpad: 1.9
   stalwart: v0.13
+  forgejo: 12
 
 monitoring:
   metrics:
@@ -44,6 +46,9 @@ monitoring:
     password:
 
 mail:
+  smtp_addr: mail.server.de
+  smtp_user: mail@server.de
+  smtp_password:
   smtp_port: 465
 
 telegram:
@@ -51,6 +56,8 @@ telegram:
   token:
 
 recaptcha:
+  public:
+  private:
 
 hetzner:
   api_key: ""

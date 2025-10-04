@@ -1,0 +1,31 @@
+- name: Clone git repo with Docker Compose scripts (uses task from role "infrastructure")
+  ansible.builtin.import_tasks: "../../infrastructure/tasks/git.yml"
+  vars:
+    infrastructure_schoolserverapp_git_repo: "https://github.com/wichmann/SchoolAppServer.git"
+
+- name: Create Forgejo configuration file
+  become: true
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker.base_dir }}/forgejo/.env"
+    mode: "0644"
+
+- name: Change mail protocol in Docker Compose file if necessary
+  ansible.builtin.replace:
+    path: "{{ docker.base_dir }}/forgejo/docker-compose.yml"
+    regexp: 'FORGEJO__mailer__PROTOCOL=smtp'
+    replace: 'FORGEJO__mailer__PROTOCOL=smtps'
+
+- name: Create secrets file for Forgejo database password
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null', length=24) }}"
+    dest: "{{ docker.base_dir }}/forgejo/forgejo_db_password.txt"
+    mode: "0644"
+    # do not replace file if it already exists
+    force: false
+
+- name: Start Docker container for Forgejo
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker.base_dir }}/forgejo"
+    state: present
+  register: forgejo_output

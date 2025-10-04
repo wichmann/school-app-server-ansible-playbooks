@@ -2,7 +2,7 @@
 
 # Backup all Docker conntainer
 # Author: Christian Wichmann
-# Date: 2024-11-19
+# Date: 2025-10-04
 
 # Check if user is root (https://stackoverflow.com/a/18216122/18073555)
 if [ "$EUID" -ne 0 ]
@@ -50,6 +50,18 @@ volumes=(
     gitea_gitea_data
     gitea_gitea_db_data
     jenkins_jenkins_home
+    forgejo_forgejo_data
+    forgejo_forgejo_db_data
+    hesk-ifa1_hesk_db_data
+    hesk-ifa2_hesk_db_data
+    hesk-ifa3_hesk_db_data
+    hesk-ifi1_hesk_db_data
+    hesk-ifi2_hesk_db_data
+    hesk-ifi3_hesk_db_data
+    hesk-ifi4_hesk_db_data
+    hesk-ifi5_hesk_db_data
+    infrastructure_traefik_certs
+    stalwart_stalwart_data
 )
 
 for i in "${volumes[@]}"; do

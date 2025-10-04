@@ -8,6 +8,7 @@ update_docker_stacks:
   - kanboard
   - onlyoffice
   - homepage
+  - forgejo
 update_image_versions:
   - dir: identity-provider
     container: authentik
@@ -33,3 +34,7 @@ update_image_versions:
     container: mailserver
     image: stalwartlabs/stalwart
     tag: "{{ versions.stalwart }}"
+  - dir: forgejo
+    container: forgejo
+    image: codeberg.org/forgejo/forgejo
+    tag: "{{ versions.forgejo }}"

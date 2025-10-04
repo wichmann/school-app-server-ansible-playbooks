@@ -40,12 +40,27 @@ services:
   gitea:
     admin_username: "gitea-admin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
+    admin_email: "" # not used in playbooks!
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
+  forgejo:
+    admin_username: "forgejo-admin" # not used in playbooks!
+    admin_password: "" # not used in playbooks!
+    admin_email: "" # not used in playbooks!
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
+    metrics_token: ""
   jenkins:
     admin_username: "admin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
+    admin_email: "" # not used in playbooks!
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
   kanboard:
     admin_username: "admin" # not used in playbooks!
     admin_password: "" # not used in playbooks!
+    oauth2_client_id: ""
+    oauth2_client_secret: ""
   onlyoffice:
     secret_token: 
   homepage:
@@ -60,8 +75,10 @@ services:
       sender_user: ei
       sender_domain: bbs-os-brinkstr.de
       subject: Anmeldung zur Excellence Initiative 2025
-      host: 
+      host: mail.server.de
       port: 465
+      user: mail@server.de
+      password: 
   stalwart:
     admin_username: admin
     admin_password: 

@@ -28,3 +28,4 @@
 *.bak
 misc/*
 tools/*.log
+.ansible

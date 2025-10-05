@@ -6,11 +6,34 @@
     dest: "{{ docker.base_dir }}/identity-provider/.env"
     mode: "0644"
 
+- name: Change Traefik host rule for Authentik in Docker Compose file
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ docker.base_dir }}/identity-provider/docker-compose.yml"
+    regexp: 'traefik.http.routers.authentik.rule='
+    line: '      - "traefik.http.routers.authentik.rule=Host(`${AUTHENTIK_DOMAIN}`) || Host(`${AUTHENTIK_BASEDOMAIN}`)"'
+    backrefs: true
+    # backrefs option guarantees that if the regexp does not match, the file will be left unchanged
+    # (see: https://stackoverflow.com/a/43256530/18073555)
+
+- name: Add Traefik middleware for Authentik in Docker Compose file
+  become: true
+  ansible.builtin.blockinfile:
+    path: "{{ docker.base_dir }}/identity-provider/docker-compose.yml"
+    insertafter: '      - "traefik.http.routers.authentik.tls.certresolver=letsencrypt"'
+    block: |
+      {% filter indent(width=4, first=true) %}
+        - "traefik.http.routers.authentik.middlewares=redirect-from-non-www"
+        - "traefik.http.middlewares.redirect-from-non-www.redirectregex.regex=^https?://${AUTHENTIK_BASEDOMAIN}/(.*)"
+        - "traefik.http.middlewares.redirect-from-non-www.redirectregex.replacement=https://${AUTHENTIK_DOMAIN}/$${1}"
+        - "traefik.http.middlewares.redirect-from-non-www.redirectregex.permanent=true"
+      {% endfilter %}
+
 - name: Start Docker container for Authentik
   community.docker.docker_compose_v2:
     project_src: "{{ docker.base_dir }}/identity-provider"
     state: present
-  register: output
+  register: authentik_output
 
 - name: Copy favicon image into Authentik media volume
   # TODO: Find a better way to provide files for Authentik (directory as volume, docker cp, ...)

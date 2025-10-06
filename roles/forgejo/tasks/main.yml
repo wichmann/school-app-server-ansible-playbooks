@@ -1,7 +1,7 @@
-- name: Clone git repo with Docker Compose scripts (uses task from role "infrastructure")
-  ansible.builtin.import_tasks: "../../infrastructure/tasks/git.yml"
-  vars:
-    infrastructure_schoolserverapp_git_repo: "https://github.com/wichmann/SchoolAppServer.git"
+#- name: Clone git repo with Docker Compose scripts (uses task from role "infrastructure")
+#  ansible.builtin.import_tasks: "../../infrastructure/tasks/git.yml"
+#  vars:
+#    infrastructure_schoolserverapp_git_repo: "https://github.com/wichmann/SchoolAppServer.git"
 
 - name: Create Forgejo configuration file
   become: true
